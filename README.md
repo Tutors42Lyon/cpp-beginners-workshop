@@ -2,6 +2,13 @@
 
 ***
 
+## Sources :
+- [ISO CPP]( https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#S-interfaces)
+- [Stroustrup.com](https://www.stroustrup.com/)
+- [CPP Reference](https://cppreference.com/)
+
+***
+
 ## Phase 1 : Theorical part
 
 ### 1.  C++ Context, Philosophy, and Compilation
@@ -9,6 +16,7 @@
 #### b. Compilation
 
 ### 2.  Namespaces, classes, member functions, stdio streams, initialization lists, static, const, and some other basic stuff
+#### a. Objects
 #### a. Namespaces
 #### b. Classes
 #### c. Members functions/attributes
@@ -28,6 +36,7 @@
 
 ### 6.  Subtype Polymorphism, Abstract Classes, and Interfaces
 
-## Phase 2 : Practical part
+## Phase 2 : Quiz Kahoot
+
 
 ***
