@@ -56,7 +56,7 @@ sizeof(variable)
 
 - **Lifetime**: Objects have well-defined creation and destruction points.
     - ***Memory Allocation***: The compiler reserves memory for the object. For **stack** objects, memory is allocated when execution enters the block while for **heap** objects (via `new`), memory is allocated in the available memory space. 
-        > See [3. Memory allocation, pointers & references](#memory-allocation,-pointers-&-references).
+        > See [3. Memory allocation, pointers & references](#memory-allocation-pointers-\&-references).
 
     - ***Constructor Execution***: Class-type objects invoke a **constructor** (special member function sharing the class name) that initializes **member** variables and *may acquire resources*. Constructors can be **default** (no parameters), **parameterized**, or **copy** constructors (cf. *Orthodox Canonical class form*). During this phase, base class (≠ derived) constructors run first (for inheritance), then member objects' constructors, and finally the enclosing class's constructor itself.
         > See [5. Inheritence](#inheritence).
@@ -67,7 +67,7 @@ sizeof(variable)
         > See [5. Inheritence](#inheritence).
     
     - ***Memory Deallocation***: Memory is released back to the system, either automatically for stack objects or manually for heap objects with delete.
-        > See [3. Memory allocation, pointers & references](#memory-allocation,-pointers-&-references).
+        > See [3. Memory allocation, pointers & references](#memory-allocation-pointers-&-references).
 
 - **Identity**: Objects have addresses in memory (except for bit-fields and register variables).
 - **State**: Objects maintain internal data that can change over time.
