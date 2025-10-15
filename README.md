@@ -12,13 +12,12 @@
 
 # Basic stuff
 ## Classes
+### Concept
 A `class` in C++ is a user-defined type that acts as a blueprint for creating [objects](#objects), grouping together related data ([attributes and functions (methods)](#members-attributes--methods)) into one cohesive unit.
 
 A `class` defines how objects (instances) of that type are **structured** and **behave**.
 
 Classes allow you to model **complex entities** (like cars, accounts, or shapes) by encapsulating their attributes and behaviors in one place.
-
-> ℹ️ See [Classes](https://en.cppreference.com/w/cpp/language/classes.html)
 
 ```cpp
 // Rectangle.hpp
@@ -28,10 +27,19 @@ class Rectangle
     int height;
 };
 ```
->💡 No memory is allocated until an object is created from it.
-
+> ℹ️ See [Classes](https://en.cppreference.com/w/cpp/language/classes.html)
 
 ![img_class&object](./assets/Class_Object_example.webp)
+
+### Classes vs Structs
+
+Both classes and structs are user-defined types that can contain attributes and functions.
+Meanwhile, classes allows you to set up **access specifiers** (private by default) to build **complex** data-types, in an [OOP](https://en.wikipedia.org/wiki/Object-oriented_programming)-way with desidered **accessibility and behavioral restrictions**.
+
+> ℹ️ See 
+- [Members Attribtes & Methods](#members-attributes--methods)
+- [Access Specifiers](#access-specifiers)
+- [Inheritence](#inheritence)
 
 ## Objects
 
@@ -86,18 +94,18 @@ sizeof(variable)
 ```
 - **Lifetime**: Objects have well-defined creation and destruction points.
     - **Memory allocation**: The compiler reserves memory for the object. For **stack** objects, memory is allocated when execution enters the block while for **heap** objects (via `new`), memory is allocated in the available memory space. 
-        > ℹ️ See [3. Memory allocation, pointers & references](#memory-allocation-pointers--references).
+        > ℹ️ See [Memory allocation, pointers & references](#memory-allocation-pointers--references).
 
     - **Constructor execution**: Class-type objects invoke a **constructor** (special member function sharing the class name) that initializes **member** variables and *may acquire resources*. Constructors can be **default** (no parameters), **parameterized**, or **copy** constructors (cf. *Orthodox Canonical class form*). During this phase, ***base class*** (!= derived) constructors run first (for inheritance), then member objects' constructors, and finally the enclosing class's constructor itself.
-        > ℹ️ See [5. Inheritence](#inheritence).
+        > ℹ️ See [Inheritence](#inheritence).
     
     - **Lifetime begins**: Once construction is complete, the object becomes *usable*. 
 
     - **Destructor execution**: When the object's lifetime ends (either automatic scope exit or delete for dynamic objects), its destructor runs. This special member function (~ClassName) is responsible for releasing resources—files, memory, sockets, etc. For class hierarchies, destructors run in reverse: the enclosing class destructor first, then member objects' destructors, and finally base class destructors.
-        > ℹ️ See [5. Inheritence](#inheritence).
+        > ℹ️ See [Inheritence](#inheritence).
     
     - **Memory deallocation**: Memory is released back to the system, either automatically for stack objects or manually for heap objects with delete.
-        > ℹ️ See [3. Memory allocation, pointers & references](#memory-allocation-pointers--references).
+        > ℹ️ See [Memory allocation, pointers & references](#memory-allocation-pointers--references).
 
 - **Identity**: Each object has a unique address in memory (except for [bit-fields](https://en.wikipedia.org/wiki/Bit_field) and [register variables](https://en.wikipedia.org/wiki/Register_(keyword))).
 
@@ -114,7 +122,7 @@ sizeof(variable)
     An object's state is the **complete set of values held by all its member variables** (data members), at anytime during runtime.
     The state represents the object's "*configuration*" that distinguishes one instance from another of the same type.
 
-    > 💡 [Static members](#static--const) belong to the class as a whole, not an individual object's state.
+    > 💡 [Static members](#static--const-keywords) belong to the class as a whole, not an individual object's state.
 
     ```cpp
     // Rectangle.hpp
@@ -155,7 +163,7 @@ sizeof(variable)
 - Is a class itself an object ? [Y/N] (N)
 
 ## Members: attributes & methods
-## Static/Const
+## Static & Const keywords
 ## Namespaces
 ## Streams
 ## Init lists
