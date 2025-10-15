@@ -13,7 +13,7 @@
 # Basic stuff
 ## Classes
 ### Concept
-A `class` in C++ is a user-defined type that acts as a blueprint for creating [objects](#objects), grouping together related data ([attributes and functions (methods)](#members-attributes--methods)) into one cohesive unit.
+A `class` in C++ is a user-defined type that acts as a blueprint for creating [objects](#objects), grouping together related data ([attributes and functions (methods)](#members-attributes--methods)) into one single cohesive unit.
 
 A `class` defines how objects (instances) of that type are **structured** and **behave**.
 
@@ -27,7 +27,40 @@ class Rectangle
     int height;
 };
 ```
+
 > ℹ️ See [Classes](https://en.cppreference.com/w/cpp/language/classes.html)
+
+### Construct and destruct an instance
+
+To create an **instance** of a given `class`, you will have to define a **public** ***constructor*** and a ***destructor*** in order to *construct* and *destruct* a class **instance** outside its own scope.
+
+They have to be respectively prototyped as follows:
+
+```cpp
+// constructor
+className(/*parameters*/);
+
+// destructor
+~className(/*parameters*/);
+```
+
+```cpp
+// Rectangle.hpp
+class Rectangle
+{
+    public:
+    Rectangle();    // constructor
+    ~Rectangle();   // destructor
+   // public member datas (attributes and methods)  
+
+};
+```
+> 💡 Note that you can have multiple constructors/destructors for a same given class
+
+> ℹ️ See 
+>- [Members Attribtes & Methods](#members-attributes--methods)
+>- [Access Specifiers](#access-specifiers)
+>- [Orthodox Canonical class form](#members-attributes--methods)
 
 ![img_class&object](./assets/Class_Object_example.webp)
 
@@ -37,9 +70,9 @@ Both classes and structs are user-defined types that can contain attributes and 
 Meanwhile, classes allows you to set up **access specifiers** (private by default) to build **complex** data-types, in an [OOP](https://en.wikipedia.org/wiki/Object-oriented_programming)-way with desidered **accessibility and behavioral restrictions**.
 
 > ℹ️ See 
-- [Members Attribtes & Methods](#members-attributes--methods)
-- [Access Specifiers](#access-specifiers)
-- [Inheritence](#inheritence)
+>- [Members Attribtes & Methods](#members-attributes--methods)
+>- [Access Specifiers](#access-specifiers)
+>- [Inheritence](#inheritence)
 
 ## Objects
 
@@ -48,7 +81,7 @@ There can be as many objects of a class as desired.
 
 ```cpp
 // main.cpp
-ClassName  objectName;`
+ClassName  objectName;
 ```
 
 > *C++ programs create, destroy, refer to, access and manipulate objects.* 
@@ -94,18 +127,21 @@ sizeof(variable)
 ```
 - **Lifetime**: Objects have well-defined creation and destruction points.
     - **Memory allocation**: The compiler reserves memory for the object. For **stack** objects, memory is allocated when execution enters the block while for **heap** objects (via `new`), memory is allocated in the available memory space. 
-        > ℹ️ See [Memory allocation, pointers & references](#memory-allocation-pointers--references).
-
-    - **Constructor execution**: Class-type objects invoke a **constructor** (special member function sharing the class name) that initializes **member** variables and *may acquire resources*. Constructors can be **default** (no parameters), **parameterized**, or **copy** constructors (cf. *Orthodox Canonical class form*). During this phase, ***base class*** (!= derived) constructors run first (for inheritance), then member objects' constructors, and finally the enclosing class's constructor itself.
-        > ℹ️ See [Inheritence](#inheritence).
+    - **Constructor execution**: Class-type objects invoke a [constructor](#construct-and-destruct-an-instance) that initializes **member** variables and *may acquire resources*.
+        Constructors can be **default** (no parameters), **parameterized**, or **copy** constructors (cf. [Orthodox Canonical class form](#orthodox-canonial-form)).
+        During this phase, ***base class*** (!= derived) constructors run first (for inheritance), then member objects' constructors, and finally the enclosing class's constructor itself.
     
     - **Lifetime begins**: Once construction is complete, the object becomes *usable*. 
 
-    - **Destructor execution**: When the object's lifetime ends (either automatic scope exit or delete for dynamic objects), its destructor runs. This special member function (~ClassName) is responsible for releasing resources—files, memory, sockets, etc. For class hierarchies, destructors run in reverse: the enclosing class destructor first, then member objects' destructors, and finally base class destructors.
-        > ℹ️ See [Inheritence](#inheritence).
+    - **Destructor execution**: When the object's lifetime ends (either automatic scope exit or delete for dynamic objects), its [destructor](#construct-and-destruct-an-instance) runs. The **destructor** is responsible for releasing resources.
+        For class hierarchies, destructors run in reverse: the enclosing class destructor first, then member objects' destructors, and finally base class destructors.
     
     - **Memory deallocation**: Memory is released back to the system, either automatically for stack objects or manually for heap objects with delete.
-        > ℹ️ See [Memory allocation, pointers & references](#memory-allocation-pointers--references).
+
+    > ℹ️ See:
+    >- [Memory allocation, pointers & references](#memory-allocation-pointers--references)
+    >- [Classes](#classes)
+    >- [Inheritence](#inheritence)
 
 - **Identity**: Each object has a unique address in memory (except for [bit-fields](https://en.wikipedia.org/wiki/Bit_field) and [register variables](https://en.wikipedia.org/wiki/Register_(keyword))).
 
