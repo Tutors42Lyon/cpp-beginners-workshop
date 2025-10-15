@@ -2,7 +2,7 @@
 - [ISO CPP]( https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#S-interfaces)
 - [C++ Classes and Objects (GeeksForGeeks)](https://www.geeksforgeeks.org/cpp/c-classes-and-objects/)
 - [Stroustrup.com](https://www.stroustrup.com/)
-- [CPP Reference](https://cppreference.com/)
+- [cppreference](https://cppreference.com/)
 
 ***
 
@@ -28,7 +28,7 @@ class Rectangle
 };
 ```
 
-> ℹ️ See [Classes](https://en.cppreference.com/w/cpp/language/classes.html)
+> ℹ️ See [Classes](https://en.cppreference.com/w/cpp/language/classes.html) (cppreference.com)
 
 ### Construct and destruct an instance
 
@@ -43,14 +43,16 @@ className(/*parameters*/);
 // destructor
 ~className(/*parameters*/);
 ```
-
+***
+TO CHECK : A **constructor** or a **destructor** without any parameter become the ***default*** constructor/destructor. If there is not any call of them, it will be automatically called at the end of the [scope](#scope) or at a `delete` call. 
+***
 ```cpp
 // Rectangle.hpp
 class Rectangle
 {
     public:
-    Rectangle();    // constructor
-    ~Rectangle();   // destructor
+    Rectangle();    // constructor (default)
+    ~Rectangle();   // destructor (default)
    // public member datas (attributes and methods)  
 
 };
@@ -86,7 +88,7 @@ ClassName  objectName;
 
 > *C++ programs create, destroy, refer to, access and manipulate objects.* 
 >
-> ℹ️ See [Object](https://en.cppreference.com/w/cpp/language/object.html)
+> ℹ️ See [Object](https://en.cppreference.com/w/cpp/language/object.html) (cppreference.com)
 
 ### Objects can be sorted in differents categories...
 - Fundamental type objects
@@ -133,7 +135,7 @@ sizeof(variable)
     
     - **Lifetime begins**: Once construction is complete, the object becomes *usable*. 
 
-    - **Destructor execution**: When the object's lifetime ends (either automatic scope exit or delete for dynamic objects), its [destructor](#construct-and-destruct-an-instance) runs. The **destructor** is responsible for releasing resources.
+    - **Destructor execution**: When the object's lifetime ends (either automatic [scope](#scope) exit or `delete` for dynamic objects), its [destructor](#construct-and-destruct-an-instance) runs. The **destructor** is responsible for releasing resources.
         For class hierarchies, destructors run in reverse: the enclosing class destructor first, then member objects' destructors, and finally base class destructors.
     
     - **Memory deallocation**: Memory is released back to the system, either automatically for stack objects or manually for heap objects with delete.
@@ -200,6 +202,7 @@ sizeof(variable)
 
 ## Members: attributes & methods
 ## Static & Const keywords
+## Scope
 ## Namespaces
 ## Streams
 ## Init lists
