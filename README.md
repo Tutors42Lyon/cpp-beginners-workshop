@@ -1,4 +1,4 @@
-# Sources :
+# ℹ️ Sources :
 - [ISO CPP]( https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#S-interfaces)
 - [C++ Classes and Objects (GeeksForGeeks)](https://www.geeksforgeeks.org/cpp/c-classes-and-objects/)
 - [Stroustrup.com](https://www.stroustrup.com/)
@@ -12,15 +12,40 @@
 
 # Basic stuff
 ## Classes
+A `class` in C++ is a user-defined type that acts as a blueprint for creating [objects](#objects), grouping together related data ([attributes and functions (methods)](#members-attributes--methods)) into one cohesive unit.
 
+A `class` defines how objects (instances) of that type are **structured** and **behave**.
 
-## Objects
-`className  objectName;`
+Classes allow you to model **complex entities** (like cars, accounts, or shapes) by encapsulating their attributes and behaviors in one place.
+
+> ℹ️ See [Classes](https://en.cppreference.com/w/cpp/language/classes.html)
+
+```cpp
+// Rectangle.hpp
+class Rectangle
+{
+    int width;
+    int height;
+};
+```
+>💡 No memory is allocated until an object is created from it.
+
 
 ![img_class&object](./assets/Class_Object_example.webp)
+
+## Objects
+
+An object is an entity created as an **instance** of a `class`.
+There can be as many objects of a class as desired.
+
+```cpp
+// main.cpp
+ClassName  objectName;`
+```
+
 > *C++ programs create, destroy, refer to, access and manipulate objects.* 
 >
-> See [Object](https://en.cppreference.com/w/cpp/language/object.html)
+> ℹ️ See [Object](https://en.cppreference.com/w/cpp/language/object.html)
 
 ### Objects can be sorted in differents categories...
 - Fundamental type objects
@@ -48,57 +73,60 @@ std::string str;
 ```
 ### ...and they have differents key characteristics.
 
-- **Type**: Each determined at compile-time (statically typed language)
+- **Type**: Each determined at compile-time (C++ is a statically typed language).
 
 ```c++
 typeid(variable).name()
 ```
 
-- **Storage**: Objects occupy memory with specific size and alignment requirements.
+- **Storage**: Objects occupy memory with specific size.
 
 ```c++
 sizeof(variable)
 ```
-
 - **Lifetime**: Objects have well-defined creation and destruction points.
-    - ***Memory allocation***: The compiler reserves memory for the object. For **stack** objects, memory is allocated when execution enters the block while for **heap** objects (via `new`), memory is allocated in the available memory space. 
-        > See [3. Memory allocation, pointers & references](#memory-allocation-pointers--references).
+    - **Memory allocation**: The compiler reserves memory for the object. For **stack** objects, memory is allocated when execution enters the block while for **heap** objects (via `new`), memory is allocated in the available memory space. 
+        > ℹ️ See [3. Memory allocation, pointers & references](#memory-allocation-pointers--references).
 
-    - ***Constructor execution***: Class-type objects invoke a **constructor** (special member function sharing the class name) that initializes **member** variables and *may acquire resources*. Constructors can be **default** (no parameters), **parameterized**, or **copy** constructors (cf. *Orthodox Canonical class form*). During this phase, base class (≠ derived) constructors run first (for inheritance), then member objects' constructors, and finally the enclosing class's constructor itself.
-        > See [5. Inheritence](#inheritence).
+    - **Constructor execution**: Class-type objects invoke a **constructor** (special member function sharing the class name) that initializes **member** variables and *may acquire resources*. Constructors can be **default** (no parameters), **parameterized**, or **copy** constructors (cf. *Orthodox Canonical class form*). During this phase, ***base class*** (!= derived) constructors run first (for inheritance), then member objects' constructors, and finally the enclosing class's constructor itself.
+        > ℹ️ See [5. Inheritence](#inheritence).
     
-    - ***Lifetime begins***: Once construction is complete, the object becomes *usable*. 
+    - **Lifetime begins**: Once construction is complete, the object becomes *usable*. 
 
-    - ***Destructor execution***: When the object's lifetime ends (either automatic scope exit or delete for dynamic objects), its destructor runs. This special member function (~ClassName) is responsible for releasing resources—files, memory, sockets, etc. For class hierarchies, destructors run in reverse: the enclosing class destructor first, then member objects' destructors, and finally base class destructors.
-        > See [5. Inheritence](#inheritence).
+    - **Destructor execution**: When the object's lifetime ends (either automatic scope exit or delete for dynamic objects), its destructor runs. This special member function (~ClassName) is responsible for releasing resources—files, memory, sockets, etc. For class hierarchies, destructors run in reverse: the enclosing class destructor first, then member objects' destructors, and finally base class destructors.
+        > ℹ️ See [5. Inheritence](#inheritence).
     
-    - ***Memory deallocation***: Memory is released back to the system, either automatically for stack objects or manually for heap objects with delete.
-        > See [3. Memory allocation, pointers & references](#memory-allocation-pointers--references).
+    - **Memory deallocation**: Memory is released back to the system, either automatically for stack objects or manually for heap objects with delete.
+        > ℹ️ See [3. Memory allocation, pointers & references](#memory-allocation-pointers--references).
 
 - **Identity**: Each object has a unique address in memory (except for [bit-fields](https://en.wikipedia.org/wiki/Bit_field) and [register variables](https://en.wikipedia.org/wiki/Register_(keyword))).
 
     An object is addressable if:
 
-    - ***Occupies Memory***: Has a location in the program's address space
+    - **Occupies Memory**: Has a location in the program's address space
 
-    - ***Byte-Aligned***: Can be referenced by a byte address (eg. bit-field)
+    - **Byte-Aligned**: Can be referenced by a byte address (eg. bit-field)
 
-    - ***Observable***: Not completely optimized away by the compiler
+    - **Observable**: Not completely optimized away by the compiler
 
-- **State**: Objects maintain internal data that can change over time (eg. register variables)
+- **State**: Objects maintain internal data that can change over time (eg. register variables).
     
     An object's state is the **complete set of values held by all its member variables** (data members), at anytime during runtime.
     The state represents the object's "*configuration*" that distinguishes one instance from another of the same type.
 
-    !Static members belong to the class as a whole, not an individual object's state.
+    > 💡 [Static members](#static--const) belong to the class as a whole, not an individual object's state.
 
     ```cpp
+    // Rectangle.hpp
     class Rectangle
     {
         int width;
         int height;
     };
+    ```
 
+    ```cpp
+    // main.cpp
     Rectangle rect;
 
     rect.width = 4;
@@ -108,14 +136,25 @@ sizeof(variable)
 
 - **Value**: An object's value generally refers to the *abstract* interpretation of the **object's state as a single meaningful entity** used in computations or comparisons.
 
+    ```cpp
+    rect.width = 4;
     ```
 
-    ```
+> 💡 **Distinction**
+>
+>```cpp
+>// main.cpp
+>Rectangle r1 = {4, 2};
+>Rectangle r2 = {4, 3};
+>```
+>- **Identity**: `&r1 != &r2` (different memory locations)
+>- **State**: `r1 = {width = 4, height = 2}` and `r2 = {width = 4, height = 3}` (different states)
+>- **Value**: `r1.width == r2.width` (both have a height of 4)
 
 ### Quiz
 - Is a class itself an object ? [Y/N] (N)
 
-## Members functions/attributes
+## Members: attributes & methods
 ## Static/Const
 ## Namespaces
 ## Streams
