@@ -34,37 +34,59 @@ class Rectangle
 
 To create an **instance** of a given `class`, you will have to define a **public** ***constructor*** and a ***destructor*** in order to *construct* and *destruct* a class **instance** outside its own scope.
 
-They have to be respectively prototyped as follows:
+#### Constructor 
+
+A **constructor** is a special [member function](#members-attributes--methods) executed when an object is created, initializing the object’s **state**, and member and base class arising from this class : calling their respective constructors.
+
+- C++ allows a class to have **multiple constructors**, each with different parameter lists (**overloading**).
+
+- A constructor without any parameter become the ***default*** constructor.
+
+- If no constructors are declared, the compiler automatically generates a default constructor which is qualified as ***trivial*** : it **only** performs member and base class initializations.
+
+- If any constructor is declared, but none is a default constructor, the compiler **does not** generate one.
+
+- If none is provided, compiler automatically generates one : it only call members and base class destructors.
 
 ```cpp
-// constructor
-className(/*parameters*/);
-
-// destructor
-~className(/*parameters*/);
+className(/* optionnal parameters */);
 ```
-***
-TO CHECK : A **constructor** or a **destructor** without any parameter become the ***default*** constructor/destructor. If there is not any call of them, it will be automatically called at the end of the [scope](#scope) or at a `delete` call. 
-***
+
+#### Destructor
+
+The **destructor** is run when an object’s lifetime ends (when it goes out of scope or after a `delete` call), releasing resources.
+
+- **Only one destructor** is permitted per class.
+
+- Overloading destructors is not allowed (can never take arguments or return a value).
+
+- 
+
+```cpp
+~className(); // No overloading
+```
+
+#### Example
+
 ```cpp
 // Rectangle.hpp
 class Rectangle
 {
     public:
-    Rectangle();    // constructor (default)
-    ~Rectangle();   // destructor (default)
-   // public member datas (attributes and methods)  
+        Rectangle();                // default
+        Rectangle(int w, int h);
+        ~Rectangle();
+   // Other public member datas (attributes and methods)  
 
 };
 ```
-> 💡 Note that you can have multiple constructors/destructors for a same given class
+![img_class&object](./assets/Class_Object_example.webp)
+
 
 > ℹ️ See 
 >- [Members Attribtes & Methods](#members-attributes--methods)
 >- [Access Specifiers](#access-specifiers)
 >- [Orthodox Canonical class form](#members-attributes--methods)
-
-![img_class&object](./assets/Class_Object_example.webp)
 
 ### Classes vs Structs
 
