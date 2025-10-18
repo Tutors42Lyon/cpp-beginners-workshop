@@ -76,7 +76,7 @@ class Rectangle
         Rectangle();                        // default
         Rectangle(int width, int height);
         ~Rectangle();
-   // Other public member datas (attributes and methods)  
+   // ...  
 };
 ```
 
@@ -101,13 +101,14 @@ A type is *POD* if it satisfies two requirements:
 - [Trivial](#constructor) (simple construction/destruction)
 - Standard layout (C-compatible memory layout)
 
-To check if the `class` you created is POD (and then should -*in most cases*- be a struct), you can use the [UnaryTypeTrait](https://en.cppreference.com/w/cpp/named_req/UnaryTypeTrait.html) (class [template](https://www.geeksforgeeks.org/cpp/templates-cpp/)) `std::is_pod` as follows:
+To check if the `class` you created is POD (and then should -*in most cases*- be a struct), you can use the [UnaryTypeTrait](https://en.cppreference.com/w/cpp/named_req/UnaryTypeTrait.html) (class [template](https://www.geeksforgeeks.org/cpp/templates-cpp/)) `std::is_pod<T>` (⚠️ C++11) as follows:
 
 ```cpp
-std::cout << std::is_pod<Class>::value << std::endl;
+std::cout << std::is_pod<Class>::value << std::endl; 
 ```
 
 > ℹ️ See 
+>- [Passive data structure](https://en.wikipedia.org/wiki/Passive_data_structure) (wikipedia.org) and [Plain Old Object (C++)](https://en.wikipedia.org/wiki/Plain_Old_C%2B%2B_Object) (wikipedia.org)
 >- [std::is_pod](https://cplusplus.com/reference/type_traits/is_pod/) (cplusplus.com) or [std::is_pod](https://en.cppreference.com/w/cpp/types/is_pod.html) (cppreference.com)
 >- [Template](https://www.en.cppreference.com/w/cpp/language/templates.html) (cppreference.com) or [Templates in C++](https://www.geeksforgeeks.org/cpp/templates-cpp/) (geeksforgeeks.org)
 
@@ -123,28 +124,12 @@ std::cout << std::is_pod<Class>::value << std::endl;
 |   Real life object abstraction        |  No              |   Yes             |
 
 > ℹ️ See 
->- [Passive data structure](https://en.wikipedia.org/wiki/Passive_data_structure) (wikipedia.org) and [Plain Old Object (C++)](https://en.wikipedia.org/wiki/Plain_Old_C%2B%2B_Object) (wikipedia.org)
 >- [Invariant](https://www.geeksforgeeks.org/cpp/what-is-class-invariant) (geeksforgeeks.org)
 >- [Classes and class hierarchy](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rc-struct) (isocpp.github.io)
 
 ### Quiz
 
-```cpp
-struct Size
-{
-    int width;
-    int height;
-};
-
-// or
-
-class Size
-{
-    public:
-        int width;
-        int height;
-};
-```
+// QUIZZZZZZZZZZZZZZZZZZZ
 
 ***
 
@@ -279,6 +264,15 @@ sizeof(variable)
 
 ## Members: attributes & methods
 
+### Encapsulation
+
+Encapsulation is the object-oriented principle of bundling data ([state](#objects)) and behavior (methods) into a class and restricting direct access to some of the object’s components. This enforces **modularity**, **maintainability**, and **robustness**.
+
+- **Information hiding**: Prevent external code from depending on internal representations.
+- **Maintain invariants**: Control how **state changes** so the object remains in a valid condition.
+- **Improve compilation efficiency**: **Minimize dependencies between modules**.
+- **Increase robustness**: Prevent **misuse** of an object’s **internal data**.
+
 ### Attributes
 
 Attributes are variables (often called *data members*) that belong to the class and **define the properties** of the objects instanciated from this class.
@@ -289,10 +283,22 @@ Methods are functions (often called *member functions*) that belong to a determi
 
 ### Access specifiers
 
-By default, each attribute or method declared inside a class are **private**, which means that only an instance of the class can access it.
+In C++, you can restrict the visibility and the accessibility to determined class members. C++ provides three access specifiers :
+
+- **`public`** : accessible from **anywhere** in the code. May be useful notably for **public constants**, **constructors and destructors**.
+- **`private`** : only accessible within the class. Core-concept of [encapsulation](#encapsulation). A well-designed class keep private a maximum amount of data, while having some ***getters/setters*** to respectively read or modify them.
+- **`protected`** : accessible within [base and derived](#inheritence) classes. Useful to build *in-class sub-restrictions*.
+
+|   Keyword         |   *Within* the class  |   From *derived* classes  |   From *outside*  the class    |
+|   --------------- | --------------------- | ------------------------- |   ---------------------------- |
+|   **`public`**      |   yes               |   no                      |   yes                          |
+|   **`private`**     |   yes               |   no                      |   no                           |
+|   **`protected`**   |   yes               |   yes                     |   no                           |
+
+By default, each member declared inside a class is **private**, which means that only an instance of the class can access it.
 
 ### Example
-
+/////////////////////////////////////////////TO REBUILD ADDING class Shape to show protectd
 ```cpp
 // Rectangle.hpp
 class Rectangle
