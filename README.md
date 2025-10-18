@@ -32,21 +32,21 @@ class Rectangle
 
 ### Construct and destruct an instance
 
-To create an **instance** of a given `class`, you will have to define a **public** ***constructor*** and a ***destructor*** in order to *construct* and *destruct* a class **instance** outside its own scope.
+To create an **instance** of a given `class`, you will have to define a **[public](#access-specifiers)** ***constructor*** and a ***destructor*** in order to *construct* and *destruct* a class **instance** outside its own scope.
 
 #### Constructor 
 
-A **constructor** is a special [member function](#members-attributes--methods) executed when an object is created, initializing the object’s **state**, and member and base class arising from this class : calling their respective constructors.
+A **constructor** is a special [member function](#members-attributes--methods) executed when an object is created, initializing the object’s **state**, [members and base class](#inheritence) : calling their respective constructors.
 
 - C++ allows a class to have **multiple constructors**, each with different parameter lists (**overloading**).
 
-- A constructor without any parameter become the ***default*** constructor.
+- A constructor without any parameter become the ***default*** constructor. It will be automatically called at the instance declaration.
 
 - If no constructors are declared, the compiler automatically generates a default constructor which is qualified as ***trivial*** : it **only** performs member and base class initializations.
 
 - If any constructor is declared, but none is a default constructor, the compiler **does not** generate one.
 
-- If none is provided, compiler automatically generates one : it only call members and base class destructors.
+- If none is provided, compiler automatically generates one : it **only** call members and base class destructors.
 
 ```cpp
 className(/* optionnal parameters */);
@@ -60,7 +60,7 @@ The **destructor** is run when an object’s lifetime ends (when it goes out of 
 
 - Overloading destructors is not allowed (can never take arguments or return a value).
 
-- 
+- Can be virtual (should be for polymorphic bas classes)
 
 ```cpp
 ~className(); // No overloading
@@ -73,13 +73,13 @@ The **destructor** is run when an object’s lifetime ends (when it goes out of 
 class Rectangle
 {
     public:
-        Rectangle();                // default
-        Rectangle(int w, int h);
+        Rectangle();                        // default
+        Rectangle(int width, int height);
         ~Rectangle();
    // Other public member datas (attributes and methods)  
-
 };
 ```
+
 ![img_class&object](./assets/Class_Object_example.webp)
 
 
@@ -93,10 +93,60 @@ class Rectangle
 Both classes and structs are user-defined types that can contain attributes and functions.
 Meanwhile, classes allows you to set up **access specifiers** (private by default) to build **complex** data-types, in an [OOP](https://en.wikipedia.org/wiki/Object-oriented_programming)-way with desidered **accessibility and behavioral restrictions**.
 
+#### POD
+Sometimes you will not need a `class`. Programming in C++ does not mean putting some classes everywhere.
+***POD*** stands for **Plain Old Data**, it describes types that have **simple**, **C-compatible** memory layout and behavior.
+
+A type is *POD* if it satisfies two requirements:
+- [Trivial](#constructor) (simple construction/destruction)
+- Standard layout (C-compatible memory layout)
+
+To check if the `class` you created is POD (and then should -*in most cases*- be a struct), you can use the [UnaryTypeTrait](https://en.cppreference.com/w/cpp/named_req/UnaryTypeTrait.html) (class [template](https://www.geeksforgeeks.org/cpp/templates-cpp/)) `std::is_pod` as follows:
+
+```cpp
+std::cout << std::is_pod<Class>::value << std::endl;
+```
+
 > ℹ️ See 
->- [Members Attribtes & Methods](#members-attributes--methods)
->- [Access Specifiers](#access-specifiers)
->- [Inheritence](#inheritence)
+>- [std::is_pod](https://cplusplus.com/reference/type_traits/is_pod/) (cplusplus.com) or [std::is_pod](https://en.cppreference.com/w/cpp/types/is_pod.html) (cppreference.com)
+>- [Template](https://www.en.cppreference.com/w/cpp/language/templates.html) (cppreference.com) or [Templates in C++](https://www.geeksforgeeks.org/cpp/templates-cpp/) (geeksforgeeks.org)
+
+#### Choose the adequate datatype
+
+|   Use Case                            |  Prefer `struct` |   Prefer `class`  |
+|   ----------------------------------- | ---------------  |   --------------- |
+|   Passive data grouping               |  Yes             |   No              |
+|   Complex invariants/behavior         |  No              |   Yes             |
+|   Encapsulation required              |  No              |   Yes             |
+|   C compatibility                     |  Yes             |   No              |
+|   Methods controlling the data        |  No              |   Yes             |
+|   Real life object abstraction        |  No              |   Yes             |
+
+> ℹ️ See 
+>- [Passive data structure](https://en.wikipedia.org/wiki/Passive_data_structure) (wikipedia.org) and [Plain Old Object (C++)](https://en.wikipedia.org/wiki/Plain_Old_C%2B%2B_Object) (wikipedia.org)
+>- [Invariant](https://www.geeksforgeeks.org/cpp/what-is-class-invariant) (geeksforgeeks.org)
+>- [Classes and class hierarchy](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rc-struct) (isocpp.github.io)
+
+### Quiz
+
+```cpp
+struct Size
+{
+    int width;
+    int height;
+};
+
+// or
+
+class Size
+{
+    public:
+        int width;
+        int height;
+};
+```
+
+***
 
 ## Objects
 
@@ -112,43 +162,46 @@ ClassName  objectName;
 >
 > ℹ️ See [Object](https://en.cppreference.com/w/cpp/language/object.html) (cppreference.com)
 
+
 ### Objects can be sorted in differents categories...
 - Fundamental type objects
 
-```c++
+```cpp
 int x = 42;
 ```
 
 - Pointer objects :
 
-```c++
+```cpp
 int *ptr;
 ```
 
 - Array objects :
 
-```c++
+```cpp
 int array[42];
 ```
 
 - Class-type objects
 
-```c++
+```cpp
 std::string str;
 ```
+
 ### ...and they have differents key characteristics.
 
 - **Type**: Each determined at compile-time (C++ is a statically typed language).
 
-```c++
+```cpp
 typeid(variable).name()
 ```
 
 - **Storage**: Objects occupy memory with specific size.
 
-```c++
+```cpp
 sizeof(variable)
 ```
+
 - **Lifetime**: Objects have well-defined creation and destruction points.
     - **Memory allocation**: The compiler reserves memory for the object. For **stack** objects, memory is allocated when execution enters the block while for **heap** objects (via `new`), memory is allocated in the available memory space. 
     - **Constructor execution**: Class-type objects invoke a [constructor](#construct-and-destruct-an-instance) that initializes **member** variables and *may acquire resources*.
@@ -222,12 +275,58 @@ sizeof(variable)
 ### Quiz
 - Is a class itself an object ? [Y/N] (N)
 
+***
+
 ## Members: attributes & methods
-## Static & Const keywords
+
+### Attributes
+
+Attributes are variables (often called *data members*) that belong to the class and **define the properties** of the objects instanciated from this class.
+
+### Methods
+
+Methods are functions (often called *member functions*) that belong to a determined class. They are used to **manipulate the class's data** members.
+
+### Access specifiers
+
+By default, each attribute or method declared inside a class are **private**, which means that only an instance of the class can access it.
+
+### Example
+
+```cpp
+// Rectangle.hpp
+class Rectangle
+{
+    public:                                         // accessible outside the class
+        Rectangle();                                // default constructor
+        ~Rectangle();                               // default destructor
+        resizeRectangle(int width, int height);     // method
+    
+    private:                                        // accessible ony inside the class (default)
+        int _width;                                 // attribute
+        int _height;                                // attribute
+};
+```
+### `static` and `const` keywords
+
+***
+
 ## Scope
+
+***
+
 ## Namespaces
+
+***
+
 ## Streams
+
+***
+
 ## Init lists
+
+***
+
 ## std::string/std::stringstream
 
 ***
