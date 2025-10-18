@@ -8,6 +8,14 @@
 
 # C++ Context, Philosophy, and Compilation
 ## Philosophy
+[Bjarne Stroustrup](https://www.stroustrup.com/), the creator of C++, designed the language with a core philosophy centered on providing power and flexibility without sacrificing efficiency or performance.
+- **General-purpose**: C++ should be usable for low-level system programming, as well as for high-level abstractions.
+- **Multi-paradigm**: Support for procedural, object-oriented, and generic programming paradigms.
+- **Control over Resources**: Features like constructors, destructors, and RAII (Resource Acquisition Is Initialization) provide systematic and safe resource management.
+- **Extensibility and Compatibility**: Designed to extend C without breaking compatibility, allowing programs to grow from C to C++ smoothly.
+- **Type Safety with Flexibility**: Strong static typing that supports user-defined types while allowing low-level access when needed.
+
+In his own words, C++ was created to "work at a high level and close to the hardware"—offering programmers expressive tools alongside fine-grained control. Stroustrup's philosophy advocates designing language features for general, efficient, and safe programming, while trusting programmers to use these tools wisely in real-world software development.
 ## Compilation
 
 # Basic stuff
@@ -23,8 +31,9 @@ Classes allow you to model **complex entities** (like cars, accounts, or shapes)
 // Rectangle.hpp
 class Rectangle
 {
-    int width;
-    int height;
+    public:
+        int width;
+        int height;
 };
 ```
 
@@ -44,9 +53,9 @@ A **constructor** is a special [member function](#members-attributes--methods) e
 
 - If no constructors are declared, the compiler automatically generates a default constructor which is qualified as ***trivial*** : it **only** performs member and base class initializations.
 
-- If any constructor is declared, but none is a default constructor, the compiler **does not** generate one.
+- If any constructor is declared, but **none is a default constructor**, the compiler **does not** generate one.
 
-- If none is provided, compiler automatically generates one : it **only** call members and base class destructors.
+- If **none** is provided, compiler automatically generates one : it **only** call members and base class destructors.
 
 ```cpp
 className(/* optionnal parameters */);
@@ -60,7 +69,7 @@ The **destructor** is run when an object’s lifetime ends (when it goes out of 
 
 - Overloading destructors is not allowed (can never take arguments or return a value).
 
-- Can be virtual (should be for polymorphic bas classes)
+- Can be virtual (should be for [polymorphic](#polymorphism) base classes)
 
 ```cpp
 ~className(); // No overloading
@@ -74,14 +83,12 @@ class Rectangle
 {
     public:
         Rectangle();                        // default
-        Rectangle(int width, int height);
-        ~Rectangle();
+        Rectangle(int width, int height);   // overloaded
+        ~Rectangle();                       // default
    // ...  
 };
 ```
-
 ![img_class&object](./assets/Class_Object_example.webp)
-
 
 > ℹ️ See 
 >- [Members Attribtes & Methods](#members-attributes--methods)
@@ -101,7 +108,7 @@ A type is *POD* if it satisfies two requirements:
 - [Trivial](#constructor) (simple construction/destruction)
 - Standard layout (C-compatible memory layout)
 
-To check if the `class` you created is POD (and then should -*in most cases*- be a struct), you can use the [UnaryTypeTrait](https://en.cppreference.com/w/cpp/named_req/UnaryTypeTrait.html) (class [template](https://www.geeksforgeeks.org/cpp/templates-cpp/)) `std::is_pod<T>` (⚠️ C++11) as follows:
+To check if the `class` you created is POD (and then should -*in most cases*- be a struct), you can use the [UnaryTypeTrait](https://en.cppreference.com/w/cpp/named_req/UnaryTypeTrait.html) ([class template](https://www.en.cppreference.com/w/cpp/language/class_template.html)) `std::is_pod<T>` (⚠️ C++11) as follows:
 
 ```cpp
 std::cout << std::is_pod<Class>::value << std::endl; 
@@ -125,7 +132,7 @@ std::cout << std::is_pod<Class>::value << std::endl;
 
 > ℹ️ See 
 >- [Invariant](https://www.geeksforgeeks.org/cpp/what-is-class-invariant) (geeksforgeeks.org)
->- [Classes and class hierarchy](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rc-struct) (isocpp.github.io)
+>- [Classes and class hierarchies](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#c-classes-and-class-hierarchies) (isocpp.github.io)
 
 ### Quiz
 
@@ -277,62 +284,37 @@ Encapsulation is the object-oriented principle of bundling **data** ([state](#ob
 
 Attributes are variables (often called *data members*) that belong to the class and **define the properties** of the objects instanciated from this class.
 
+```cpp
+int height;  
+```
+
 ### Methods
 
 Methods are functions (often called *member functions*) that belong to a determined class. They are used to **manipulate the class's data** members.
+```cpp
+int getHeight(void);  
+```
 
 ### Access specifiers
 
 In C++, you can restrict the visibility and the accessibility to determined class members. C++ provides three access specifiers :
 
 - **`public`** : accessible from **anywhere** in the code. May be useful notably for **public constants**, **constructors and destructors**.
-- **`private`** : only accessible within the class. Core-concept of [encapsulation](#encapsulation). A well-designed class keep private a maximum amount of data, while having some ***getters/setters*** to respectively read or modify them.
 - **`protected`** : accessible within [base and derived](#inheritence) classes. Useful to build *in-class sub-restrictions*.
+- **`private`** : only accessible within the class. Core-concept of [encapsulation](#encapsulation). A well-designed class keep private a maximum amount of data, while having some ***getters/setters*** to respectively read or modify them.
 
 |   Keyword         |   *Within* the class  |   From *derived* classes  |   From *outside*  the class    |
 |   --------------- | --------------------- | ------------------------- |   ---------------------------- |
-|   **`public`**      |   yes               |   no                      |   yes                          |
-|   **`private`**     |   yes               |   no                      |   no                           |
-|   **`protected`**   |   yes               |   yes                     |   no                           |
+|   **`public`**    |   yes                 |   no                      |   yes                          |
+|   **`protected`** |   yes                 |   yes                     |   no                           |
+|   **`private`**   |   yes                 |   no                      |   no                           |
 
 By default, each member declared inside a class is **private**, which means that only an instance of the class can access it.
 
-### Example
-/////////////////////////////////////////////TO REBUILD ADDING class Shape to show protectd
-```cpp
-// Vehicle.hpp
-class Vehicle
-{
-    public:
-        Vehicle();
-        ~Vehicle();
-        int    _getColor(void);
-        int    _getBrand(void);
-    
-    protected:
-        int     _getSpeed(void);
-    
-    private:
-        int     _id;
-        int     _color;
-        int     _speed;
+/////////////////////////////////////////// EXEMPLE
 
-        int    _getId(void);
-};
+> ℹ️ See [Inheritence](#inheritence)
 
-```
-
-```cpp
-// Car.hpp
-class Car : public Vehicle
-{
-    public:
-        Car();
-        ~Car();
-    
-    private:
-};
-```
 ### `static` and `const` keywords
 
 ***
@@ -365,7 +347,7 @@ class Car : public Vehicle
 ***
 
 # Ad-hoc polymorphism, operator overloading and the Orthodox Canonical class form
-
+## Polymorphism
 ***
 
 # Inheritence
