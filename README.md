@@ -266,11 +266,11 @@ sizeof(variable)
 
 ### Encapsulation
 
-Encapsulation is the object-oriented principle of bundling data ([state](#objects)) and behavior (methods) into a class and restricting direct access to some of the object’s components. This enforces **modularity**, **maintainability**, and **robustness**.
+Encapsulation is the object-oriented principle of bundling **data** ([state](#objects)) and **behavior** ([methods](#methods)) into a class and **restricting direct access** to some of the object’s components. This enforces **modularity**, **maintainability**, and **robustness**.
 
 - **Information hiding**: Prevent external code from depending on internal representations.
 - **Maintain invariants**: Control how **state changes** so the object remains in a valid condition.
-- **Improve compilation efficiency**: **Minimize dependencies between modules**.
+- **Improve compilation efficiency**: **Minimize dependencies** between modules.
 - **Increase robustness**: Prevent **misuse** of an object’s **internal data**.
 
 ### Attributes
@@ -300,17 +300,37 @@ By default, each member declared inside a class is **private**, which means that
 ### Example
 /////////////////////////////////////////////TO REBUILD ADDING class Shape to show protectd
 ```cpp
-// Rectangle.hpp
-class Rectangle
+// Vehicle.hpp
+class Vehicle
 {
-    public:                                         // accessible outside the class
-        Rectangle();                                // default constructor
-        ~Rectangle();                               // default destructor
-        resizeRectangle(int width, int height);     // method
+    public:
+        Vehicle();
+        ~Vehicle();
+        int    _getColor(void);
+        int    _getBrand(void);
     
-    private:                                        // accessible ony inside the class (default)
-        int _width;                                 // attribute
-        int _height;                                // attribute
+    protected:
+        int     _getSpeed(void);
+    
+    private:
+        int     _id;
+        int     _color;
+        int     _speed;
+
+        int    _getId(void);
+};
+
+```
+
+```cpp
+// Car.hpp
+class Car : public Vehicle
+{
+    public:
+        Car();
+        ~Car();
+    
+    private:
 };
 ```
 ### `static` and `const` keywords
