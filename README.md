@@ -326,6 +326,7 @@ A `static` data member is useful for maintaining a shared data among all instanc
 
 ## Scope
 
+
 ### Prequisites
 
 Before starting digging into C++ scopes, we have to understand these three critical properties and their relationships :
@@ -336,7 +337,6 @@ Before starting digging into C++ scopes, we have to understand these three criti
     > ℹ️ See [Scope](https://en.cppreference.com/w/cpp/language/scope.html) (cppreference.com)
 
 - **Lifetime** (or *storage duration*), determines when an object exists in memory : the time spent between memory allocation and deallocation. The concept of **lifetime** differs from the **scope**: a variable may go out of scope while its memory persists.
-
     > *When does this name exists ?* 
     >
     > ℹ️ See :
@@ -344,22 +344,78 @@ Before starting digging into C++ scopes, we have to understand these three criti
     >- [Memory allocation, pointers and references](#memory-allocation-pointers--references)
 
 - **Visibility** concerns whether an identifier can actually be accessed within a particular scope, during its lifetime, which may be **restricted** by **[access specifiers](#access-specifiers)**, **name hiding** or **linkage**.
-
     > *Can I actually access this ?* 
     >
-    > ℹ️ See :
-    >- [Objects](#objects)
-    >- [Variable shadowing (name hiding)](https://www.learncpp.com/cpp-tutorial/variable-shadowing-name-hiding/) (leancpp.com)
-    >- [Memory allocation, pointers and references](#memory-allocation-pointers--references)
-    >- [Translation units and linkage](https://learn.microsoft.com/en-us/cpp/cpp/program-and-linkage-cpp?view=msvc-170) (learn.microsoft.com)
-
-### Namespaces
+    > ℹ️ See [Variable shadowing (name hiding)](https://www.learncpp.com/cpp-tutorial/variable-shadowing-name-hiding/) (leancpp.com)
+    >> 💡 **Good to know**
+    >>
+    >> Linkage refers to the **visibility** of variables/functions **across different translation units**.
+    >>
+    >> ℹ️ See :
+    >>- [Translation units](https://en.wikipedia.org/wiki/Translation_unit_%28programming%29) (wikipedia.org)
+    >>- [Translation units and linkage](https://learn.microsoft.com/en-us/cpp/cpp/program-and-linkage-cpp?view=msvc-170) (learn.microsoft.com) and [Language Linkage](https://en.cppreference.com/w/cpp/language/language_linkage.html) (wikipedia.org)
+    >>- [C++ Linkage explained](https://cppscripts.com/cpp-linkage) (cppscripts.com)
 
 
 
 ### Fundamental Scopes
 
-C++ defines **6 fundamental scope categories**, each with distinct rules governing the identifier **[visibility](#prequisites)** and **behavior**.
+C++ defines **fundamental scope categories**, each with distinct rules governing the identifier **[visibility](#prequisites)** and **behavior**.
+
+#### Global Scope (Namespace Scope/File Scope)
+
+**Global scope** (or **namespace scope** in C++, **file scope** in C), encompasses declarations made outside any function, class or explicit [namespace](#namespaces).
+
+An identifier declared at **global scope** is **visible** from is declaration to the end of the **translation unit** (source file and all included headers after preprocessing).
+
+There is exactly one instance of each global variable throughout program execution (unless declared with **internal linkage**).
+
+Global identifiers have external linkage by default, making them visible across translation units. The static keyword gives them internal linkage, restricting visibility to the current translation unit:
+```cpp
+// linkage.cpp
+int external_var = 1;        // external linkage (visible across files)
+static int internal_var = 2; // internal linkage (local to this file)
+```
+> ℹ️ See :
+>- [Translation units](https://en.wikipedia.org/wiki/Translation_unit_%28programming%29) (wikipedia.org)
+>- [Translation units and linkage](https://learn.microsoft.com/en-us/cpp/cpp/program-and-linkage-cpp?view=msvc-170) (learn.microsoft.com) and [Language Linkage](https://en.cppreference.com/w/cpp/language/language_linkage.html) (wikipedia.org)
+>- [C++ Linkage explained](https://cppscripts.com/cpp-linkage) (cppscripts.com)
+
+```cpp
+ // globalScope.cpp
+ int g_value = 42;  // g_value's scope begins here
+
+ void foo()
+ {
+     // g_value is visible here
+ }
+
+ void bar()
+ {
+     // g_value still visible here
+ }
+ // ...
+ // g_value's scope ends at the end of the translation unit
+ ```
+
+In C++, *global identifiers* technically reside within the **implicit global namespace**. You can refer to ***global names*** using the **[scope resolution operator `::`](#operator-overloading)** whith no prefix `::name`.
+
+> ⚠️ Local variables can hide global names, here comes the **scope resolution operator** :
+>
+> ```cpp
+> // globalScope.cpp
+> int   value = 42;
+> 
+> int   main(void)
+> {
+>   int value = 21;
+>   
+>   std::cout << value << std::endl;    // displays 21 (local)
+>   std::cout << ::value << std::endl;  // displays 42 (global)
+>
+>   return (0);
+> }
+> ```
 
 #### Local Scope (Block Scope)
 
@@ -412,74 +468,111 @@ void    example(void)
 >   
 >   ℹ️ See [Switch fallthrough and scoping](https://www.learncpp.com/cpp-tutorial/switch-fallthrough-and-scoping/) (learncpp.com)
 
-#### Function Scope
+#### Function Parameters Scope
 
-**Function scope** applies only to labels used with **`goto` statements**. This is a frequently misunderstood scope type, often confused with *functions bodies' [block scope](#local-scope-block-scope)*.
-**Labels** have function scope, meaning they are visible throughout the entire function body, even before their point of declaration. This allows forward references:
+**Function parameters scope** is the **most limited** scope type, applying only to parameter names in function declaration.
 
-> Examples :
->
 > ```cpp
-> // functionScope.cpp
-> void   example(void)
-> {
->    if (error)
->       goto cleanup;   // forward reference to label
->    // ... processing code ...
->    cleanup:           // label declaration
->    // ... cleanup code ...
-> }
-> ```
-> The `goto` statement **cannot jump across initialization** of variables or into blocks where variables would be skipped over:
-> ```cpp
-> // functionScope.cpp
-> void illegalExample() 
-> {
->    goto skip;
->    int x = 5;  // cannot skip over initialization
->    
->    skip:
->    // x would be in scope but uninitialized
-> }
-> ```
-
-#### Function Prototype Scope
-
-**Function prototype scope** is the **most limited** scope type, applying only to parameter names in function declaration.
-> ```cpp
-> // functionPrototypeScope.cpp
+> // functionParametersScope.cpp
 > void invalid(int x, int x);   // duplicate parameter name
 > void valid(int x, int y);
 > ```
 
-#### Global Scope (Namespace Scope/File Scope)
+#### Namespace
 
-**Global scope** (or **namespace scope** in C++, **file scope** in C), encompasses declarations made outside any function, class or explicit [namespace](#namespaces).
+**Namespaces** provide a method for preventing name conflicts in large projects. All entitity that are declared inside a namespace are automatically placed in a [namespace scope](#namespace-scope) which prevents them from being mistaken for **indentically-named entities** in other scopes.
+Otherwise, entities that are declared outside a namespace belong to the [global scope (Namespace Scope/File Scope)](#global-scope-namespace-scope-file-scope).
 
-An identifier declared at **global scope** is **visible** from is declaration to the end of the **translation unit** (source file and all included headers after preprocessing).
+- **Scope Management**: Namespaces define where an identifier is **visible**.
+- **Modularity**: Code can be **grouped logically**.
+- **Name Collision Avoidance**: Identical identifiers in different namespaces are **distinct**.
 
-> ℹ️ See [Translation units](https://en.wikipedia.org/wiki/Translation_unit_%28programming%29) (wikipedia.org)
+A **namespace** is defined as follows :
 
->```cpp
-> // globalScope.cpp
-> int g_glob = 42;  // g_glob's scope begins here
->
-> void foo()
-> {
->     // g_glob is visible here
-> }
->
-> void bar()
-> {
->     // g_glob still visible here
-> }
-> // ...
-> // g_glob's scope ends at the end of the translation unit
-> ```
-
-In C++, even identifiers declared as *global*, technically reside within the **implicit global namespace**. You can refer to ***global names*** using the **[scope resolution operator `::`](#operator-overloading)** whith no prefix as follows :
 ```cpp
-::name
+namespace Foo 
+{
+    int value = 42;
+    int func(void)
+    {
+        return (42);
+    }
+}
+```
+
+You can access namespace members from different ways:
+
+- **Fully Qualified Members** : Access each member using the **complete namespace path**.
+
+```cpp
+Foo::value++;
+Foo::func();
+```
+
+- **Using Declaration**: Introduce a **single member** into the current scope.
+```cpp
+using Foo::func;
+
+Foo::value++;
+func();
+```
+
+- **Using Directive**: Introduce **all members** into the current scope. **(⚠️ NOT SAFE)**
+
+```cpp
+using namespace Foo;
+
+value++;
+func();
+```
+##### Example
+
+```cpp
+// namespaceScope.cpp
+int value = 42;
+int func(void) { return (4); }
+
+namespace   Foo
+{
+    int value = 21;
+    int func(void)
+    {
+        return (2);
+    }
+}
+
+namespace   Bar
+{
+    int value = 84;
+    int func(void)
+    {
+        return (8);
+    }
+}
+
+namespace   Muf = Foo;
+
+int	main(void)
+{
+    std::cout   << Foo::value << std::endl      // displays 21 (Foo's namespace scope) 
+                << Foo::func() << std::endl;    // displays 2   (Foo's namespace scope)
+
+    std::cout   << Bar::value << std::endl      // displays 84 (Bar's namespace scope)
+                << Bar::func() << std::endl;    // displays 8 (Bar's namespace scope)
+
+    std::cout   << Muf::value << std::endl      // displays 21 (Muf(= Foo)'s namespace scope)
+                << Muf::func() << std::endl;    // displays 2 (Muf(= Foo)'s namespace scope)
+
+    std::cout   << ::value   << std::endl       // displays 42 (global)
+                << ::func() << std::endl;       // displays 4 (global)
+}
+```
+##### Quiz
+
+1. According to the previous example, what would be outputed by the following code ?
+```cpp
+std::cout   << value << std::endl
+            << func() << std::endl;
 ```
 
 ***
