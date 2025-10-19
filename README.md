@@ -142,13 +142,7 @@ std::cout << std::is_pod<Class>::value << std::endl;
 
 ## Objects
 
-An object is an entity created as an **instance** of a `class`.
-There can be as many objects of a class as desired.
-
-```cpp
-// main.cpp
-ClassName  objectName;
-```
+An object is an entity.
 
 > *C++ programs create, destroy, refer to, access and manipulate objects.* 
 >
@@ -157,25 +151,21 @@ ClassName  objectName;
 
 ### Objects can be sorted in differents categories...
 - Fundamental type objects
-
 ```cpp
 int x = 42;
 ```
 
 - Pointer objects :
-
 ```cpp
 int *ptr;
 ```
 
 - Array objects :
-
 ```cpp
 int array[42];
 ```
 
 - Class-type objects
-
 ```cpp
 std::string str;
 ```
@@ -183,13 +173,11 @@ std::string str;
 ### ...and they have differents key characteristics.
 
 - **Type**: Each determined at compile-time (C++ is a statically typed language).
-
 ```cpp
 typeid(variable).name()
 ```
 
 - **Storage**: Objects occupy memory with specific size.
-
 ```cpp
 sizeof(variable)
 ```
@@ -219,7 +207,7 @@ sizeof(variable)
     - **Occupies Memory**: Has a location in the program's address space
 
     - **Byte-Aligned**: Can be referenced by a byte address (eg. bit-field)
-
+    
     - **Observable**: Not completely optimized away by the compiler
 
 - **State**: Objects maintain internal data that can change over time (eg. register variables).
@@ -275,14 +263,15 @@ sizeof(variable)
 
 Encapsulation is the object-oriented principle of bundling **data** ([state](#objects)) and **behavior** ([methods](#methods)) into a class and **restricting direct access** to some of the object’s components. This enforces **modularity**, **maintainability**, and **robustness**.
 
-- **Information hiding**: Prevent external code from depending on internal representations.
-- **Maintain invariants**: Control how **state changes** so the object remains in a valid condition.
-- **Improve compilation efficiency**: **Minimize dependencies** between modules.
-- **Increase robustness**: Prevent **misuse** of an object’s **internal data**.
+>- **Information hiding**: Prevent external code from depending on internal representations.
+>- **Maintain invariants**: Control how **state changes** so the object remains in a valid condition.
+>- **Improve compilation efficiency**: **Minimize dependencies** between modules.
+>- **Increase robustness**: Prevent **misuse** of an object’s **internal data**.
 
 ### Attributes
 
 Attributes are variables (often called *data members*) that belong to the class and **define the properties** of the objects instanciated from this class.
+A good practice is to have a maximum amount of `private` or `protected` data.
 
 ```cpp
 int height;  
@@ -291,6 +280,8 @@ int height;
 ### Methods
 
 Methods are functions (often called *member functions*) that belong to a determined class. They are used to **manipulate the class's data** members.
+We often use simple mono use function to *get* or *set* private attributes, we call them respectively **getters** and **setters**.
+
 ```cpp
 int getHeight(void);  
 ```
@@ -301,7 +292,11 @@ In C++, you can restrict the visibility and the accessibility to determined clas
 
 - **`public`** : accessible from **anywhere** in the code. May be useful notably for **public constants**, **constructors and destructors**.
 - **`protected`** : accessible within [base and derived](#inheritence) classes. Useful to build *in-class sub-restrictions*.
-- **`private`** : only accessible within the class. Core-concept of [encapsulation](#encapsulation). A well-designed class keep private a maximum amount of data, while having some ***getters/setters*** to respectively read or modify them.
+- **`private`** : only accessible within the class. Core-concept of [encapsulation](#encapsulation).
+
+> 💡 **Good practices tips**
+>- A well-designed class keep private a maximum amount of data, while having some ***[getters/setters](#methods)*** to respectively read or modify them.
+>- When building a `class`, start setting all members as `private`, then you will set as `public` only the needed members.
 
 |   Keyword         |   *Within* the class  |   From *derived* classes  |   From *outside*  the class    |
 |   --------------- | --------------------- | ------------------------- |   ---------------------------- |
@@ -315,15 +310,85 @@ By default, each member declared inside a class is **private**, which means that
 
 > ℹ️ See [Inheritence](#inheritence)
 
-### `static` and `const` keywords
+### Some other keywords
+
+#### `static`
+
+A `static` data member is useful for maintaining a shared data among all instances of the class. It is declared in the **`class` declaration**
+
+- **Only one copy** of that member is created for all instances of a given `class`.
+- It is initialized **before any object** of this `class`.
+- Its lifetime is the **entire program**.
+
+
+#### `const`
 
 ***
 
 ## Scope
 
-***
+### Prequisites
 
-## Namespaces
+Before starting digging into C++ scopes, we have to understand these three critical properties and their relationships :
+
+- **Scope** is a fundamental compile-time concept that defines the *region of the program* where an identifier name can be used to **refer to its entity**.
+    > *Where can I use this name ?* 
+    >
+    > ℹ️ See [Scope](https://en.cppreference.com/w/cpp/language/scope.html) (cppreference.com)
+
+- **Lifetime** (or *storage duration*), determines when an object exists in memory : the time spent between memory allocation and deallocation. The concept of **lifetime** differs from the **scope**: a variable may go out of scope while its memory persists.
+
+    > *When does this name exists ?* 
+    >
+    > ℹ️ See :
+    >- [Objects](#objects)
+    >- [Memory allocation, pointers and references](#memory-allocation-pointers--references)
+
+- **Visibility** concerns whether an identifier can actually be accessed within a particular scope, during its lifetime, which may be **restricted** by [access specifiers](#access-specifiers), name hiding or compiling rules.
+
+    > *Can I actually access this ?* 
+    >
+    > ℹ️ See :
+    >- [Variable shadowing (name hiding)](https://www.learncpp.com/cpp-tutorial/variable-shadowing-name-hiding/) (leancpp.com)
+    >- [Objects](#objects)
+    >- [Memory allocation, pointers and references](#memory-allocation-pointers--references)
+
+### Fundamental Scopes
+
+C++ defines **6 fundamental scope categories**, each with distinct rules governing the identifier **accessibility** and **behavior**.
+
+#### Local Scope (Block Scope)
+
+**Local scope** or **Block Scope** encompasses any identifier declared within a compound statement delimited by curly braces `{}`, from the declaration.
+
+A block is created by any pair of braces `{}`, including :
+- function bodies
+- loop bodies
+- conditionnal statements
+- standalone braces
+
+Variables declared within a block have **automatic storage duration** by default : they are **created** when execution reaches their declaration and **destroyed** when the block exits.
+
+> ⚠️ You cannot use a variable before its declaration point within the same block, even though the entire block constitutes its scope.
+
+```cpp
+// localScope.cpp
+void    example(void)
+{
+    int x = 42;     // x's scope begins
+    {               // standalone brackets
+        int y = x;  // y's scope begins
+    }
+    // y's scope ends
+}
+// x's scope ends
+```
+> ⚠️ Controls structures (`if`, `while`, `for`...) create their own scopes with specific rules.
+>
+> Example :
+>```
+> 
+>```
 
 ***
 
