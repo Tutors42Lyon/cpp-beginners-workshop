@@ -320,7 +320,6 @@ A `static` data member is useful for maintaining a shared data among all instanc
 - It is initialized **before any object** of this `class`.
 - Its lifetime is the **entire program**.
 
-
 #### `const`
 
 ***
@@ -344,18 +343,23 @@ Before starting digging into C++ scopes, we have to understand these three criti
     >- [Objects](#objects)
     >- [Memory allocation, pointers and references](#memory-allocation-pointers--references)
 
-- **Visibility** concerns whether an identifier can actually be accessed within a particular scope, during its lifetime, which may be **restricted** by [access specifiers](#access-specifiers), name hiding or compiling rules.
+- **Visibility** concerns whether an identifier can actually be accessed within a particular scope, during its lifetime, which may be **restricted** by **[access specifiers](#access-specifiers)**, **name hiding** or **linkage**.
 
     > *Can I actually access this ?* 
     >
     > ℹ️ See :
-    >- [Variable shadowing (name hiding)](https://www.learncpp.com/cpp-tutorial/variable-shadowing-name-hiding/) (leancpp.com)
     >- [Objects](#objects)
+    >- [Variable shadowing (name hiding)](https://www.learncpp.com/cpp-tutorial/variable-shadowing-name-hiding/) (leancpp.com)
     >- [Memory allocation, pointers and references](#memory-allocation-pointers--references)
+    >- [Translation units and linkage](https://learn.microsoft.com/en-us/cpp/cpp/program-and-linkage-cpp?view=msvc-170) (learn.microsoft.com)
+
+### Namespaces
+
+
 
 ### Fundamental Scopes
 
-C++ defines **6 fundamental scope categories**, each with distinct rules governing the identifier **accessibility** and **behavior**.
+C++ defines **6 fundamental scope categories**, each with distinct rules governing the identifier **[visibility](#prequisites)** and **behavior**.
 
 #### Local Scope (Block Scope)
 
@@ -378,17 +382,105 @@ void    example(void)
     int x = 42;     // x's scope begins
     {               // standalone brackets
         int y = x;  // y's scope begins
-    }
-    // y's scope ends
-}
-// x's scope ends
+    }               // y's scope ends
+}                   // x's scope ends
 ```
-> ⚠️ Controls structures (`if`, `while`, `for`...) create their own scopes with specific rules.
+> ⚠️ Controls structures (`if`, `while`, `for`, `switch`...) create their own scopes with specific rules.
 >
 > Example :
->```
-> 
->```
+>- In a `for` loop if the *iterator* is declared into the statement, it is not accessible outside of the loop and cannot be redeclared in the loop body.
+>   ```cpp
+>   for (int i = 0; i < 42; ++i) // i's scope begins
+>   {
+>       // i cannot be redeclared
+>       std::cout << i << std::endl;
+>       } // i's scope ends
+>   ```
+>- In a `switch` statement, a **single scope** is created, encompassing all case labels and their statements.
+>   ```cpp
+>   switch (value)
+>   {
+>       int x;      // x's scope extends through entire switch
+>       case (1):
+>           x = 10; // assignment (not initialization)
+>           break;
+>       case (2):
+>           break; // x is in scope but may be uninitialized
+>   }
+>   ```
+>   Initialization within case statements requires careful consideration. You cannot initialize a variable in one case **if subsequent cases can access it without that initialization occurring**, as this would violate initialization safety.
+>   
+>   ℹ️ See [Switch fallthrough and scoping](https://www.learncpp.com/cpp-tutorial/switch-fallthrough-and-scoping/) (learncpp.com)
+
+#### Function Scope
+
+**Function scope** applies only to labels used with **`goto` statements**. This is a frequently misunderstood scope type, often confused with *functions bodies' [block scope](#local-scope-block-scope)*.
+**Labels** have function scope, meaning they are visible throughout the entire function body, even before their point of declaration. This allows forward references:
+
+> Examples :
+>
+> ```cpp
+> // functionScope.cpp
+> void   example(void)
+> {
+>    if (error)
+>       goto cleanup;   // forward reference to label
+>    // ... processing code ...
+>    cleanup:           // label declaration
+>    // ... cleanup code ...
+> }
+> ```
+> The `goto` statement **cannot jump across initialization** of variables or into blocks where variables would be skipped over:
+> ```cpp
+> // functionScope.cpp
+> void illegalExample() 
+> {
+>    goto skip;
+>    int x = 5;  // cannot skip over initialization
+>    
+>    skip:
+>    // x would be in scope but uninitialized
+> }
+> ```
+
+#### Function Prototype Scope
+
+**Function prototype scope** is the **most limited** scope type, applying only to parameter names in function declaration.
+> ```cpp
+> // functionPrototypeScope.cpp
+> void invalid(int x, int x);   // duplicate parameter name
+> void valid(int x, int y);
+> ```
+
+#### Global Scope (Namespace Scope/File Scope)
+
+**Global scope** (or **namespace scope** in C++, **file scope** in C), encompasses declarations made outside any function, class or explicit [namespace](#namespaces).
+
+An identifier declared at **global scope** is **visible** from is declaration to the end of the **translation unit** (source file and all included headers after preprocessing).
+
+> ℹ️ See [Translation units](https://en.wikipedia.org/wiki/Translation_unit_%28programming%29) (wikipedia.org)
+
+>```cpp
+> // globalScope.cpp
+> int g_glob = 42;  // g_glob's scope begins here
+>
+> void foo()
+> {
+>     // g_glob is visible here
+> }
+>
+> void bar()
+> {
+>     // g_glob still visible here
+> }
+> // ...
+> // g_glob's scope ends at the end of the translation unit
+> ```
+
+In C++, even identifiers declared as *global*, technically reside within the **implicit global namespace**. You can refer to ***global names*** using the **[scope resolution operator `::`](#operator-overloading)** whith no prefix as follows :
+```cpp
+::name
+```
 
 ***
 
