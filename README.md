@@ -677,6 +677,7 @@ using namespace Foo;
 value++;
 func();
 ```
+
 ##### Example
 
 ```cpp
@@ -722,13 +723,57 @@ int	main(void)
 #### Quiz
 
 1. According to the previous example, what would be outputed by the following code ?
+
 ```cpp
+// ...
 std::cout   << value << std::endl
             << func() << std::endl;
+// ...
 ```
+
 ***
 
 # Init lists
+
+In C++, you can initialize **member variables** before the constructor body executes. 
+
+- **Order of Initialization**: Members are initialized in the order they are declared in the class, not the order they appear in the initializer list.
+- **Efficiency**: Using an initializer list can be more efficient than assigning values within the constructor body, especially for complex types.
+- **Const and Reference Members**: These must be initialized using an initializer list since they cannot be assigned after the object is created.
+
+```cpp
+myClass(int param1, double param2)
+    : attr1(param1), attr2(param2)
+{
+    /* optional body */
+};
+```
+## Exemple
+
+```cpp
+// initList.hpp
+class Player
+{
+    public:
+    	Player(int id, double level, std::string name)
+    		: _id(id), _level(level), _name(name)       // overloaded constructor initialization list
+        {
+            std::cout << "Player subscribed !" << std::endl;
+        };
+       
+    	void		displayPlayer(void)
+    	{
+    		std::cout << this->_id << " | "
+    			<< this->_level << " | "
+    			<< this->_name << std::endl;
+    	};
+    
+    private:
+    	int			_id;
+    	double		_level;
+    	std::string	_name;
+};
+```
 
 ***
 
