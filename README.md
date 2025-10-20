@@ -1,8 +1,11 @@
-# ℹ️ Sources :
-- [ISO CPP]( https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#S-interfaces)
-- [C++ Classes and Objects (GeeksForGeeks)](https://www.geeksforgeeks.org/cpp/c-classes-and-objects/)
-- [Stroustrup.com](https://www.stroustrup.com/)
-- [cppreference](https://cppreference.com/)
+# 🏗️ WIP
+**Which means** :
+- **Incomplete** informations
+- **Typos**
+- Some **internal link** may not redirect you as wanted
+- Some **source** can be missing
+
+
 
 ***
 
