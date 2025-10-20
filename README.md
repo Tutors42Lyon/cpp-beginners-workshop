@@ -324,7 +324,7 @@ In C++, you can restrict the visibility and the accessibility to determined clas
 
 |   Keyword         |   *Within* the class  |   From *derived* classes  |   From *outside*  the class    |
 |   --------------- | --------------------- | ------------------------- |   ---------------------------- |
-|   **`public`**    |   yes                 |   no                      |   yes                          |
+|   **`public`**    |   yes                 |   yes                     |   yes                          |
 |   **`protected`** |   yes                 |   yes                     |   no                           |
 |   **`private`**   |   yes                 |   no                      |   no                           |
 
