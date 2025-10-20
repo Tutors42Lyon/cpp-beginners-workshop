@@ -9,11 +9,13 @@
 
 # Philosophy
 [Bjarne Stroustrup](https://www.stroustrup.com/), the creator of C++, designed the language with a philosophy centered on providing **flexibility** without sacrificing **efficiency or performance**.
+
 - **General-purpose**: C++ should be usable for low-level system programming, as well as for high-level abstractions.
 - **Multi-paradigm**: Support for procedural, object-oriented, and generic programming paradigms.
 - **Control over Resources**: Features like constructors, destructors, and RAII (Resource Acquisition Is Initialization) provide systematic and safe resource management.
 - **Extensibility and Compatibility**: Designed to extend C without breaking compatibility, allowing programs to grow from C to C++ smoothly.
 - **Type Safety with Flexibility**: Strong static typing that supports user-defined types while allowing low-level access when needed.
+
 
 ## Some applications
 
@@ -29,7 +31,7 @@
 
 - **Dassault Systems** : Catia v5 (CAD) on which was notably conceived all recent Airbus planes.
 
-- **Microsof** t: Literally everything at Microsoft is built using recent flavors of Visual C++ (using older versions would automatically cause an application to fail the security review). The list would include major products like:
+- **Microsoft** : Literally everything at Microsoft is built using recent flavors of Visual C++ (using older versions would automatically cause an application to fail the security review). The list would include major products like:
     - Windows XP, Vista, System 7
     - Windows NT (NT4 and 2000)
     - Windows 9x (95, 98, Me)
@@ -39,7 +41,7 @@
     - Exchange
     - SQL 
     
-- **KDE** (K Desktop Environment) : powerful Open Source graphical desktop environment for Unix workstations. It consists of about 300 different packages written in C++, including an office suite, a browser, development tools, games, and multimedia apps.
+- **KDE** (K Desktop Environment) : powerful open source graphical desktop environment for Unix workstations. It consists of about 300 different packages written in C++, including an office suite, a browser, development tools, games, and multimedia apps.
 
 > ℹ️ See [Applications](https://www.stroustrup.com/applications.html) (stroustrup.com)
 
@@ -66,8 +68,10 @@ Let's break this program down to introduce some core-concepts :
 #include <iostream>
 ```
 
-- `#` indicate a preprocessor statement. Before your code is compiled, the preprocessor *processes* all these statements.
-- As in C, you need to `include` libraries to be able to use them.
+- `#` indicates a **preprocessor** statement. Before your code is compiled, the preprocessor *processes* all these statements.
+
+- As in C, you need to `include` **libraries** to be able to use them.
+
 - `iostream` is the **standard input/output** [stream](#stream) library. Which here, allows you to use `std::cout` and `std::endl`
 
 > ℹ️ See :
@@ -79,13 +83,14 @@ Let's break this program down to introduce some core-concepts :
 ```cpp
 std::cout << "Hello World !" << std::endl;
 ```
-- `std` stands for **standard [namespace](#namespace)**, which groups together **names** ([classes](#classes), functions or [objects](#objects)) defined by the C++ standard library.
+
+- `std` stands for **standard [namespace](#namespace)**, which groups together **names** ([classes](#classes), functions, [objects](#objects) ...) defined by the C++ standard library.
 
 - `::` is the **scope resolution operator**. It is used to **access a name** that belongs to a specific [**scope**](#scope).
 
 - `cout` stands for ***console out***, which is a global [**object**](#objects) representing the **standard output stream**.
 
-- `<<` is the **stream insetion operator**. **In this case**, it is used to sends the value on its right into the [stream](#stream) on its left. Multiple `<<` can be chained to send several concatenated pieces of data.
+- `<<` is the **stream insetion operator**. **In this case**, it is used to sends the value on its right into the [stream](#stream) on its left. Multiple `<<` can be chained to send several *concatenated* pieces of data.
 
 - `endl` stands for ***end line***, which is a **manipulator** that inserts the newline character (`\n`) and then flushes the output buffer.
 
@@ -98,9 +103,9 @@ std::cout << "Hello World !" << std::endl;
 
 # Classes
 ## Concept
-A `class` in C++ is a user-defined type that acts as a blueprint for creating [objects](#objects), grouping together related data ([attributes and functions (methods)](#members-attributes--methods)) into one single cohesive unit.
+A `class` in C++ is a user-defined type that acts as a blueprint for creating [objects](#objects), grouping together related data ([attributes and functions (methods)](#members-attributes--methods)) into one single unit.
 
-A `class` defines how objects (instances) of that type are **structured** and **behave**.
+A `class` defines how objects of that type are **structured** and **behave**.
 
 Classes allow you to model **complex entities** (like cars, accounts, or shapes) by encapsulating their attributes and behaviors in one place.
 
@@ -118,21 +123,19 @@ class Rectangle
 
 ## Construct and destruct an instance
 
-To create an **instance** of a given `class`, you will have to define a **[public](#access-specifiers)** ***constructor*** and a ***destructor*** in order to *construct* and *destruct* a class **instance** outside its own scope.
+To create an **instance** of a given `class`, you will have to define a **[public](#access-specifiers)** ***constructor*** and a ***destructor*** in order to respectively *construct* and *destruct* a class **instance** outside its own scope.
 
 ### Constructor 
 
-A **constructor** is a special [member function](#members-attributes--methods) executed when an object is created, initializing the object’s **state**, [members and base class](#inheritence) : calling their respective constructors.
+A **constructor** is a special [member function](#members-attributes--methods) executed when an object is declared, initializing the object’s **state**, [members and base class](#inheritence) : calling their respective constructors.
 
 - C++ allows a class to have **multiple constructors**, each with different parameter lists (**overloading**).
 
-- A constructor without any parameter become the ***default*** constructor. It will be automatically called at the instance declaration.
+- A constructor without any parameter become the **default constructor**. It will be automatically called at the instance declaration.
 
-- If no constructors are declared, the compiler automatically generates a default constructor which is qualified as ***trivial*** : it **only** performs member and base class initializations.
+- If **no constructors are declared**, the compiler automatically generates a default constructor which is qualified as ***trivial*** : it **only** performs member and base class ***default initializations***.
 
 - If any constructor is declared, but **none is a default constructor**, the compiler **does not** generate one.
-
-- If **none** is provided, compiler automatically generates one : it **only** call members and base class destructors.
 
 ```cpp
 className(/* optionnal parameters */);
@@ -400,8 +403,8 @@ They are useful for maintaining a shared data among all instances of the class.
 class Entity
 {
     public:
-        static int _count;                       // declaration
-        Entity(void) { ++this->_count; };
+        static int count;                       // declaration
+        Entity(void) { ++this->count; };
 };
 
 ```
