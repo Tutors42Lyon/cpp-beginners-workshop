@@ -5,8 +5,6 @@
 - Some **internal link** may not redirect you as wanted
 - Some **source** can be missing
 
-
-
 ***
 
 # Philosophy
@@ -45,7 +43,58 @@
 
 > ℹ️ See [Applications](https://www.stroustrup.com/applications.html) (stroustrup.com)
 
-# Compilation
+***
+
+# Hello World !
+
+Your C++ journey begins with a *simple* but **powerful** program.
+
+```cpp
+#include <iostream>
+
+int main(void)
+{
+    std::cout << "Hello World !" << std::endl;
+
+    return (0);
+}
+```
+
+Let's break this program down to introduce some core-concepts :
+
+```cpp
+#include <iostream>
+```
+
+- `#` indicate a preprocessor statement. Before your code is compiled, the preprocessor *processes* all these statements.
+- As in C, you need to `include` libraries to be able to use them.
+- `iostream` is the **standard input/output** [stream](#stream) library. Which here, allows you to use `std::cout` and `std::endl`
+
+> ℹ️ See :
+>- [Preprocessor](https://en.cppreference.com/w/cpp/preprocessor.html) (cppreference.com)
+>- [*How to use librairies in C++*](https://stackoverflow.com/questions/10358745/how-to-use-libraries) (stackoverflow.com)
+>- [`iostream`](https://en.cppreference.com/w/cpp/header/iostream.html) (cppreference.com)
+
+
+```cpp
+std::cout << "Hello World !" << std::endl;
+```
+- `std` stands for **standard [namespace](#namespace)**, which groups together **names** ([classes](#classes), functions or [objects](#objects)) defined by the C++ standard library.
+
+- `::` is the **scope resolution operator**. It is used to **access a name** that belongs to a specific [**scope**](#scope).
+
+- `cout` stands for ***console out***, which is a global [**object**](#objects) representing the **standard output stream**.
+
+- `<<` is the **stream insetion operator**. **In this case**, it is used to sends the value on its right into the [stream](#stream) on its left. Multiple `<<` can be chained to send several concatenated pieces of data.
+
+- `endl` stands for ***end line***, which is a **manipulator** that inserts the newline character (`\n`) and then flushes the output buffer.
+
+> ℹ️ See :
+>- [C++ Standard Library](https://en.cppreference.com/w/cpp/standard_library.html) (cppreference.com) or [C++ Standard Library](https://en.wikipedia.org/wiki/C%2B%2B_Standard_Library) (wikipedia.org) 
+>- [Scope resolution operator](https://www.geeksforgeeks.org/cpp/scope-resolution-operator-in-c/) (geeksforgeeks.org)
+>- [Manipulators in C++](https://www.geeksforgeeks.org/cpp/manipulators-in-c-with-examples/) (geeksforgeeks.org)
+
+***
 
 # Classes
 ## Concept
@@ -336,7 +385,9 @@ In C++, you can restrict the visibility and the accessibility to determined clas
 
 ### `static`
 
-Static data members are not associated with the objects of the class: they are **independent** variables/functions with **static storage duration**. They are useful for maintaining a shared data among all instances of the class.
+Static data members are not associated with the objects of the class: they are **independent** variables/functions with **static storage duration**. They still belong to the `class`.
+
+They are useful for maintaining a shared data among all instances of the class.
 
 **Static attributes**
 - **Only one copy** of that member is created for all instances of a given `class`.
@@ -373,7 +424,7 @@ int	main(void)
 > ℹ️ See :
 >- [Static Data Members](https://www.geeksforgeeks.org/cpp/cpp-static-data-members/) (geeksforgeeks.org)
 >- [ODR (One Definition Rule)](https://en.cppreference.com/w/cpp/language/definition.html) (cppreference.com)
->- [Why does a static data member need to be defined outside of the class?](https://stackoverflow.com/questions/18749071/why-does-a-static-data-member-need-to-be-defined-outside-of-the-class) (stackoverflow.com)
+>- [*Why does a static data member need to be defined outside of the class ?*](https://stackoverflow.com/questions/18749071/why-does-a-static-data-member-need-to-be-defined-outside-of-the-class) (stackoverflow.com)
 
 **Static methods** 
 - It's basically a normal function that's nested inside of the scope of the class. 
@@ -547,7 +598,9 @@ static int  internal_var = 2; // internal linkage (local to this file)
  // g_value's scope ends at the end of the translation unit
  ```
 
-In C++, *global identifiers* technically reside within the **implicit global namespace**. You can refer to ***global names*** using the **[scope resolution operator `::`](#operator-overloading)** whith no prefix `::name`.
+In C++, *global identifiers* technically reside within the **implicit global namespace**. You can refer to ***global names*** using the **scope resolution operator `::`** whith no prefix `::name`.
+
+> ℹ️ See [Scope resolution operator](https://www.geeksforgeeks.org/cpp/scope-resolution-operator-in-c/) (geeksforgeeks.org)
 
 > ⚠️ Local variables can hide global names, here comes the **scope resolution operator** :
 >
