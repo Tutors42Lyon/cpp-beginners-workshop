@@ -6,8 +6,7 @@
 
 ***
 
-# C++ Context, Philosophy, and Compilation
-## Philosophy
+# Philosophy
 [Bjarne Stroustrup](https://www.stroustrup.com/), the creator of C++, designed the language with a philosophy centered on providing **flexibility** without sacrificing **efficiency or performance**.
 - **General-purpose**: C++ should be usable for low-level system programming, as well as for high-level abstractions.
 - **Multi-paradigm**: Support for procedural, object-oriented, and generic programming paradigms.
@@ -15,7 +14,7 @@
 - **Extensibility and Compatibility**: Designed to extend C without breaking compatibility, allowing programs to grow from C to C++ smoothly.
 - **Type Safety with Flexibility**: Strong static typing that supports user-defined types while allowing low-level access when needed.
 
-### Some applications
+## Some applications
 
 - **Adobe Systems** : All major applications are developed in C++:
     - Photoshop & ImageReady,
@@ -46,11 +45,10 @@
 
 > ℹ️ See [Applications](https://www.stroustrup.com/applications.html) (stroustrup.com)
 
-## Compilation
+# Compilation
 
-# Basic stuff
-## Classes
-### Concept
+# Classes
+## Concept
 A `class` in C++ is a user-defined type that acts as a blueprint for creating [objects](#objects), grouping together related data ([attributes and functions (methods)](#members-attributes--methods)) into one single cohesive unit.
 
 A `class` defines how objects (instances) of that type are **structured** and **behave**.
@@ -69,11 +67,11 @@ class Rectangle
 
 > ℹ️ See [Classes](https://en.cppreference.com/w/cpp/language/classes.html) (cppreference.com)
 
-### Construct and destruct an instance
+## Construct and destruct an instance
 
 To create an **instance** of a given `class`, you will have to define a **[public](#access-specifiers)** ***constructor*** and a ***destructor*** in order to *construct* and *destruct* a class **instance** outside its own scope.
 
-#### Constructor 
+### Constructor 
 
 A **constructor** is a special [member function](#members-attributes--methods) executed when an object is created, initializing the object’s **state**, [members and base class](#inheritence) : calling their respective constructors.
 
@@ -91,7 +89,7 @@ A **constructor** is a special [member function](#members-attributes--methods) e
 className(/* optionnal parameters */);
 ```
 
-#### Destructor
+### Destructor
 
 The **destructor** is run when an object’s lifetime ends (when it goes out of scope or after a `delete` call), releasing resources.
 
@@ -105,7 +103,7 @@ The **destructor** is run when an object’s lifetime ends (when it goes out of 
 ~className(); // No overloading
 ```
 
-#### Example
+### Example
 
 ```cpp
 // Rectangle.hpp
@@ -125,12 +123,12 @@ class Rectangle
 >- [Access Specifiers](#access-specifiers)
 >- [Orthodox Canonical class form](#members-attributes--methods)
 
-### Classes vs Structs
+## Classes vs Structs
 
 Both classes and structs are user-defined types that can contain attributes and functions.
 Meanwhile, classes allows you to set up **access specifiers** (private by default) to build **complex** data-types, in an [OOP](https://en.wikipedia.org/wiki/Object-oriented_programming)-way with desidered **accessibility and behavioral restrictions**.
 
-#### POD
+### POD
 Sometimes you will not need a `class`. Programming in C++ does not mean putting some classes everywhere.
 ***POD*** stands for **Plain Old Data**, it describes types that have **simple**, **C-compatible** memory layout and behavior.
 
@@ -164,13 +162,9 @@ std::cout << std::is_pod<Class>::value << std::endl;
 >- [Invariant](https://www.geeksforgeeks.org/cpp/what-is-class-invariant) (geeksforgeeks.org)
 >- [Classes and class hierarchies](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#c-classes-and-class-hierarchies) (isocpp.github.io)
 
-### Quiz
-
-// QUIZZZZZZZZZZZZZZZZZZZ
-
 ***
 
-## Objects
+# Objects
 
 An object is an entity.
 
@@ -179,7 +173,7 @@ An object is an entity.
 > ℹ️ See [Object](https://en.cppreference.com/w/cpp/language/object.html) (cppreference.com)
 
 
-### Objects can be sorted in differents categories...
+## Objects can be sorted in differents categories...
 - Fundamental type objects
 ```cpp
 int x = 42;
@@ -200,7 +194,7 @@ int array[42];
 std::string str;
 ```
 
-### ...and they have differents key characteristics.
+## ...and they have differents key characteristics.
 
 - **Type**: Each determined at compile-time (C++ is a statically typed language).
 ```cpp
@@ -282,14 +276,14 @@ sizeof(variable)
 >- **State**: `r1 = {width = 4, height = 2}` and `r2 = {width = 4, height = 3}` (different states)
 >- **Value**: `r1.width == r2.width` (both have a height of 4)
 
-### Quiz
+## Quiz
 - Is a class itself an object ? [Y/N] (N)
 
 ***
 
-## Members: attributes & methods
+# Members: attributes & methods
 
-### Encapsulation
+## Encapsulation
 
 Encapsulation is the object-oriented principle of bundling **data** ([state](#objects)) and **behavior** ([methods](#methods)) into a class and **restricting direct access** to some of the object’s components. This enforces **modularity**, **maintainability**, and **robustness**.
 
@@ -298,7 +292,7 @@ Encapsulation is the object-oriented principle of bundling **data** ([state](#ob
 - **Improve compilation efficiency**: **Minimize dependencies** between modules.
 - **Increase robustness**: Prevent **misuse** of an object’s **internal data**.
 
-### Attributes
+## Attributes
 
 Attributes are variables (often called *data members*) that belong to the class and **define the properties** of the objects instanciated from this class.
 A good practice is to have a maximum amount of `private` or `protected` data.
@@ -307,7 +301,7 @@ A good practice is to have a maximum amount of `private` or `protected` data.
 int height;  
 ```
 
-### Methods
+## Methods
 
 Methods are functions (often called *member functions*) that belong to a determined class. They are used to **manipulate the class's data** members.
 We often use simple mono use function to *get* or *set* private attributes, we call them respectively **getters** and **setters**.
@@ -316,7 +310,7 @@ We often use simple mono use function to *get* or *set* private attributes, we c
 int getHeight(void);  
 ```
 
-### Access specifiers
+## Access specifiers
 
 In C++, you can restrict the visibility and the accessibility to determined class members. C++ provides three access specifiers :
 
@@ -334,15 +328,13 @@ In C++, you can restrict the visibility and the accessibility to determined clas
 |   **`protected`** |   yes                 |   yes                     |   no                           |
 |   **`private`**   |   yes                 |   no                      |   no                           |
 
-By default, each member declared inside a `class` is **private**, which means that only an instance of the class can access it.
-
-/////////////////////////////////////////// EXEMPLE
+> 💡 By default, each member declared inside a `class` is **private**.
 
 > ℹ️ See [Inheritence](#inheritence)
 
-### Some other keywords
+## Some other keywords
 
-#### `static`
+### `static`
 
 Static data members are not associated with the objects of the class: they are **independent** variables/functions with **static storage duration**. They are useful for maintaining a shared data among all instances of the class.
 
@@ -364,8 +356,8 @@ class Entity
 ```
 
 ```cpp
-// staticAttribute.cpp
-int Entity::count;                              // need to define it outside the class
+// main.cpp
+int Entity::count;                              // definition
 
 int	main(void)
 {
@@ -399,18 +391,18 @@ class Entity
     	static int getValue(void) { return (_value); }; // declaration
 
     private:
-    	static int _value;                              // declaration
+    	static int _value;
 };
 
 ```
 
 ```cpp
-// staticMethods.cpp
-int Entity::_value = 42;                                // definition & initialization
+// main.cpp
+int Entity::_value = 42;                            // definition & initialization
 
 int	main(void)
-{                                                       // no need to intanciate an object
-    std::cout << Entity::getValue() << std::endl;       // outputs 42
+{                                                   // no need to intanciate an object
+    std::cout << Entity::getValue() << std::endl;   // outputs 42
     
     return (0);
 }
@@ -420,26 +412,34 @@ int	main(void)
 >- [Static Members Function](https://www.geeksforgeeks.org/cpp/static-member-function-in-cpp/) (geeksforgeeks.org)
 >- [Storage class specifiers](https://en.cppreference.com/w/cpp/language/storage_duration.html) (cppreference.com)
 
-#### 🏗️ `mutable` **WIP**
 
-#### `const`
+### `const`
 
 **Constant objects**
-- **State** cannot be modified.
+- Object's **state** cannot be modified.
 - Cannot **call non-`const` member functions**.
 - `const` has to *close* the prototype, else that is the return datatype that is qualified as const.
+
+**Constant methods**
+- Can be called on **any type of object**.
+- Cannot **change value** of their own class members.
+
+> 💡 **Good to know**
+>
+> The const property of an object goes into effect **after the constructor** finishes executing and ends **before the class's destructor** executes. So the constructor and destructor can modify the data members of the object, but other methods of the class can't.
+
 
 ```cpp
 // constObjects.hpp
 class Entity
 {
     public:
-        Entity(int id, std::string name)            // overloaded constructor
+        Entity(int id, std::string name)        // overloaded constructor
         {
             this->_id = id;
             this->_name = name;
         }
-        void        displayEntity(void) const       // constant qualification at the end of the prototype
+        void        displayEntity(void) const   // const qualifier at the end of the prototype
         {
             std::cout << this->_id << ": " << this->_name << std::endl;
         };
@@ -452,7 +452,7 @@ class Entity
 ```
 
 ```cpp
-// constObjects.cpp
+// main.cpp
 int main(void)
 {
     const Entity e1(42, "John");    // overloaded construction of a constant object
@@ -461,38 +461,22 @@ int main(void)
 
     return (0);
 }
-
-```
-> 💡 **Good to know**
->
-> The const property of an object goes into effect **after the constructor** finishes executing and ends **before the class's destructor** executes. So the constructor and destructor can modify the data members of the object, but other methods of the class can't.
-
-**Constant methods**
-- Can be called on **any type of object**.
-- Cannot **change value** of their own class members.
-
-```cpp
-// constMethods.hpp
-
-```
-
-```cpp
-// constMethods.cpp
-
 ```
 
 > ℹ️ See :
 >- [Constant Objects and Constant Member Functions](https://faculty.cs.niu.edu/~mcmahon/CS241/Notes/const_objects_and_member_functions.html) (faculty.cs.niu.edu)
 >- [Storage class specifiers](https://en.cppreference.com/w/cpp/language/storage_duration.html) (cppreference.com)
 
-#### 🏗️ `volatile` **WIP**
+
+### 🏗️ `volatile` and `mutable`
+
 
 ***
 
-## Scope
+# Scope
 
 
-### Prequisites
+## Prequisites
 
 Before starting digging into C++ scopes, we have to understand these three critical properties and their relationships :
 
@@ -523,11 +507,11 @@ Before starting digging into C++ scopes, we have to understand these three criti
 
 
 
-### Fundamental Scopes
+## Fundamental Scopes
 
 C++ defines **fundamental scope categories**, each with distinct rules governing the identifier **[visibility](#prequisites)** and **behavior**.
 
-#### Global Scope (Namespace Scope/File Scope)
+### Global Scope (Namespace Scope/File Scope)
 
 **Global scope** (or **namespace scope** in C++, **file scope** in C), encompasses declarations made outside any function, class or explicit [namespace](#namespaces).
 
@@ -582,7 +566,7 @@ In C++, *global identifiers* technically reside within the **implicit global nam
 > }
 > ```
 
-#### Local Scope (Block Scope)
+### Local Scope (Block Scope)
 
 **Local scope** or **Block Scope** encompasses any identifier declared within a compound statement delimited by curly braces `{}`, from the declaration.
 
@@ -633,7 +617,7 @@ void    example(void)
 >   
 >   ℹ️ See [Switch fallthrough and scoping](https://www.learncpp.com/cpp-tutorial/switch-fallthrough-and-scoping/) (learncpp.com)
 
-#### Function Parameters Scope
+### Function Parameters Scope
 
 **Function parameters scope** is the **most limited** scope type, applying only to parameter names in function declaration.
 
@@ -643,7 +627,7 @@ void    example(void)
 > void valid(int x, int y);
 > ```
 
-#### Namespace
+### Namespace
 
 **Namespaces** provide a method for preventing name conflicts in large projects. All entitity that are declared inside a namespace are automatically placed in a [namespace scope](#namespace-scope) which prevents them from being mistaken for **indentically-named entities** in other scopes.
 Otherwise, entities that are declared outside a namespace belong to the [global scope (Namespace Scope/File Scope)](#global-scope-namespace-scope-file-scope).
@@ -732,43 +716,23 @@ int	main(void)
                 << ::func() << std::endl;       // displays 4 (global)
 }
 ```
-##### Quiz
+#### Quiz
 
 1. According to the previous example, what would be outputed by the following code ?
 ```cpp
 std::cout   << value << std::endl
             << func() << std::endl;
 ```
+***
+
+# Init lists
 
 ***
 
-## Streams
+# Streams
 
 ***
 
-## Init lists
-
-***
-
-## std::string/std::stringstream
-
-***
-
-# Memory allocation, pointers & references
-## New/Delete
-## Pointers/References
-## Switch statememts
-
-***
-
-# Ad-hoc polymorphism, operator overloading and the Orthodox Canonical class form
-## Polymorphism
-***
-
-# Inheritence
-
-***
-
-# Subtype Polymorphism, Abstract Classes, and Interfaces
+# std::string/std::stringstream
 
 ***
