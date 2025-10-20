@@ -293,10 +293,10 @@ sizeof(variable)
 
 Encapsulation is the object-oriented principle of bundling **data** ([state](#objects)) and **behavior** ([methods](#methods)) into a class and **restricting direct access** to some of the object’s components. This enforces **modularity**, **maintainability**, and **robustness**.
 
->- **Information hiding**: Prevent external code from depending on internal representations.
->- **Maintain invariants**: Control how **state changes** so the object remains in a valid condition.
->- **Improve compilation efficiency**: **Minimize dependencies** between modules.
->- **Increase robustness**: Prevent **misuse** of an object’s **internal data**.
+- **Information hiding**: Prevent external code from depending on internal representations.
+- **Maintain invariants**: Control how **state changes** so the object remains in a valid condition.
+- **Improve compilation efficiency**: **Minimize dependencies** between modules.
+- **Increase robustness**: Prevent **misuse** of an object’s **internal data**.
 
 ### Attributes
 
@@ -334,7 +334,7 @@ In C++, you can restrict the visibility and the accessibility to determined clas
 |   **`protected`** |   yes                 |   yes                     |   no                           |
 |   **`private`**   |   yes                 |   no                      |   no                           |
 
-By default, each member declared inside a class is **private**, which means that only an instance of the class can access it.
+By default, each member declared inside a `class` is **private**, which means that only an instance of the class can access it.
 
 /////////////////////////////////////////// EXEMPLE
 
@@ -344,15 +344,148 @@ By default, each member declared inside a class is **private**, which means that
 
 #### `static`
 
-A `static` data member is useful for maintaining a shared data among all instances of the class. It is declared in the **`class` declaration**
+Static data members are not associated with the objects of the class: they are **independent** variables/functions with **static storage duration**. They are useful for maintaining a shared data among all instances of the class.
 
+**Static attributes**
 - **Only one copy** of that member is created for all instances of a given `class`.
-- It is initialized **before any object** of this `class`.
-- Its lifetime is the **entire program**.
+- They have to be **defined once**, given the **ODR (One Definition Rule)** and the fact that **definition** occurs while instanciating a `class` into an object : you have to define them **outside the class**, and **outside any function**. 
+- Its lifetime is the **entire program** but its **visibility** is limited to the actual **translation unit**.
+- They cannot be associated with `mutable` keyword.
+
+```cpp
+// staticAttribute.hpp
+class Entity
+{
+    public:
+        static int _count;                       // declaration
+        Entity(void) { ++this->_count; };
+};
+
+```
+
+```cpp
+// staticAttribute.cpp
+int Entity::count;                              // need to define it outside the class
+
+int	main(void)
+{
+    Entity e1;
+    Entity e2;
+	
+    std::cout << Entity::count << std::endl;    // outputs 2
+
+    return (0);
+}
+```
+
+> ℹ️ See :
+>- [Static Data Members](https://www.geeksforgeeks.org/cpp/cpp-static-data-members/) (geeksforgeeks.org)
+>- [ODR (One Definition Rule)](https://en.cppreference.com/w/cpp/language/definition.html) (cppreference.com)
+>- [Why does a static data member need to be defined outside of the class?](https://stackoverflow.com/questions/18749071/why-does-a-static-data-member-need-to-be-defined-outside-of-the-class) (stackoverflow.com)
+
+**Static methods** 
+- It's basically a normal function that's nested inside of the scope of the class. 
+- Can be called **without creating an object**.
+- Only has access to **static members (attributes or methods)**.
+- Cannot use `this` to refer to a member because they don't belong to any instance of the `class`.
+- Useful when a function’s logic is **independent** of object state.
+- They cannot be associated with `virtual`, `const` or `volatile`.
+
+```cpp
+// staticMethods.hpp
+class Entity
+{
+    public:
+    	static int getValue(void) { return (_value); }; // declaration
+
+    private:
+    	static int _value;                              // declaration
+};
+
+```
+
+```cpp
+// staticMethods.cpp
+int Entity::_value = 42;                                // definition & initialization
+
+int	main(void)
+{                                                       // no need to intanciate an object
+    std::cout << Entity::getValue() << std::endl;       // outputs 42
+    
+    return (0);
+}
+```
+
+> ℹ️ See :
+>- [Static Members Function](https://www.geeksforgeeks.org/cpp/static-member-function-in-cpp/) (geeksforgeeks.org)
+>- [Storage class specifiers](https://en.cppreference.com/w/cpp/language/storage_duration.html) (cppreference.com)
+
+#### 🏗️ `mutable` **WIP**
 
 #### `const`
 
-#### `mutable`
+**Constant objects**
+- **State** cannot be modified.
+- Cannot **call non-`const` member functions**.
+- `const` has to *close* the prototype, else that is the return datatype that is qualified as const.
+
+```cpp
+// constObjects.hpp
+class Entity
+{
+    public:
+        Entity(int id, std::string name)            // overloaded constructor
+        {
+            this->_id = id;
+            this->_name = name;
+        }
+        void        displayEntity(void) const       // constant qualification at the end of the prototype
+        {
+            std::cout << this->_id << ": " << this->_name << std::endl;
+        };
+
+    private:
+        int         _id;
+        std::string _name;
+};
+
+```
+
+```cpp
+// constObjects.cpp
+int main(void)
+{
+    const Entity e1(42, "John");    // overloaded construction of a constant object
+
+    e1.displayEntity();
+
+    return (0);
+}
+
+```
+> 💡 **Good to know**
+>
+> The const property of an object goes into effect **after the constructor** finishes executing and ends **before the class's destructor** executes. So the constructor and destructor can modify the data members of the object, but other methods of the class can't.
+
+**Constant methods**
+- Can be called on **any type of object**.
+- Cannot **change value** of their own class members.
+
+```cpp
+// constMethods.hpp
+
+```
+
+```cpp
+// constMethods.cpp
+
+```
+
+> ℹ️ See :
+>- [Constant Objects and Constant Member Functions](https://faculty.cs.niu.edu/~mcmahon/CS241/Notes/const_objects_and_member_functions.html) (faculty.cs.niu.edu)
+>- [Storage class specifiers](https://en.cppreference.com/w/cpp/language/storage_duration.html) (cppreference.com)
+
+#### 🏗️ `volatile` **WIP**
 
 ***
 
@@ -405,8 +538,8 @@ There is exactly one instance of each global variable throughout program executi
 Global identifiers have external linkage by default, making them visible across translation units. The static keyword gives them internal linkage, restricting visibility to the current translation unit:
 ```cpp
 // linkage.cpp
-int external_var = 1;        // external linkage (visible across files)
-static int internal_var = 2; // internal linkage (local to this file)
+int         external_var = 1; // external linkage (visible across files)
+static int  internal_var = 2; // internal linkage (local to this file)
 ```
 > ℹ️ See :
 >- [Translation units](https://en.wikipedia.org/wiki/Translation_unit_%28programming%29) (wikipedia.org)
