@@ -19,7 +19,7 @@
 
 ## Some applications
 
-- **Adobe Systems** : All major applications are developed in C++:
+- **Adobe Systems** : Most applications are developed in C++:
     - Photoshop & ImageReady,
     - Illustrator,
     - Acrobat,
@@ -27,12 +27,9 @@
     - GoLive,
     - Frame (mostly C, some C++) 
 
-- **Apple** :
-    - Finder
-    - IOKit device drivers. (IOKit is the only place where we use C++ in the kernel, though.)
+- **Apple** Finder
 
-- **Dassault Systems** :
-    - Catia v5 (CAD) on which was notably conceived all recent Airbus planes.
+- **Dassault Systems** : Catia v5 (CAD) on which was notably conceived all recent Airbus planes.
 
 - **Microsof** t: Literally everything at Microsoft is built using recent flavors of Visual C++ (using older versions would automatically cause an application to fail the security review). The list would include major products like:
     - Windows XP, Vista, System 7
@@ -44,7 +41,7 @@
     - Exchange
     - SQL 
     
-- **KDE** (K Desktop Environment) : powerful Open Source graphical desktop environment for Unix workstations. It is one of the leading desktop environments for Linux. It consists of about 300 different packages written in C++, including an office suite, a browser, development tools, games, and multimedia apps.
+- **KDE** (K Desktop Environment) : powerful Open Source graphical desktop environment for Unix workstations. It consists of about 300 different packages written in C++, including an office suite, a browser, development tools, games, and multimedia apps.
 
 > ℹ️ See [Applications](https://www.stroustrup.com/applications.html) (stroustrup.com)
 
@@ -669,7 +666,7 @@ Foo::value++;
 func();
 ```
 
-- **Using Directive**: Introduce **all members** into the current scope. **(⚠️ NOT SAFE)**
+- **Using Directive**: Introduce **all members** into the current scope.
 
 ```cpp
 using namespace Foo;
@@ -677,6 +674,12 @@ using namespace Foo;
 value++;
 func();
 ```
+
+> ⚠️ **`using namespace` is not safe at all**
+>
+> Especially at global scope, it introduces mutliple significant risks, particularly in large, complex or evolving codebases.
+>- **Name collision** : importing an entire `namespace` (per example the often seen : `using namesace std;`) floods the current scopes with thousands of identifiers. It might leeds to name collision with your code or some external librairies.
+>- **Readability loss** : qualifying names with their namespaces (`std::cout`) makes it immediately clear which data (datatype, function, variable...) is being referenced.
 
 ##### Example
 
@@ -738,7 +741,9 @@ std::cout   << value << std::endl
 In C++, you can initialize **member variables** before the constructor body executes. 
 
 - **Order of Initialization**: Members are initialized in the order they are declared in the class, not the order they appear in the initializer list.
+
 - **Efficiency**: Using an initializer list can be more efficient than assigning values within the constructor body, especially for complex types.
+
 - **Const and Reference Members**: These must be initialized using an initializer list since they cannot be assigned after the object is created.
 
 ```cpp
@@ -769,7 +774,7 @@ class Player
     	};
     
     private:
-    	int			_id;
+    	int	        _id;
     	double		_level;
     	std::string	_name;
 };
