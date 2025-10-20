@@ -8,14 +8,44 @@
 
 # C++ Context, Philosophy, and Compilation
 ## Philosophy
-[Bjarne Stroustrup](https://www.stroustrup.com/), the creator of C++, designed the language with a core philosophy centered on providing power and flexibility without sacrificing efficiency or performance.
+[Bjarne Stroustrup](https://www.stroustrup.com/), the creator of C++, designed the language with a philosophy centered on providing **flexibility** without sacrificing **efficiency or performance**.
 - **General-purpose**: C++ should be usable for low-level system programming, as well as for high-level abstractions.
 - **Multi-paradigm**: Support for procedural, object-oriented, and generic programming paradigms.
 - **Control over Resources**: Features like constructors, destructors, and RAII (Resource Acquisition Is Initialization) provide systematic and safe resource management.
 - **Extensibility and Compatibility**: Designed to extend C without breaking compatibility, allowing programs to grow from C to C++ smoothly.
 - **Type Safety with Flexibility**: Strong static typing that supports user-defined types while allowing low-level access when needed.
 
-In his own words, C++ was created to "work at a high level and close to the hardware"—offering programmers expressive tools alongside fine-grained control. Stroustrup's philosophy advocates designing language features for general, efficient, and safe programming, while trusting programmers to use these tools wisely in real-world software development.
+### Some applications
+
+- **Adobe Systems** : All major applications are developed in C++:
+    - Photoshop & ImageReady,
+    - Illustrator,
+    - Acrobat,
+    - InDesign,
+    - GoLive,
+    - Frame (mostly C, some C++) 
+
+- **Apple** :
+    - Finder
+    - IOKit device drivers. (IOKit is the only place where we use C++ in the kernel, though.)
+
+- **Dassault Systems** :
+    - Catia v5 (CAD) on which was notably conceived all recent Airbus planes.
+
+- **Microsof** t: Literally everything at Microsoft is built using recent flavors of Visual C++ (using older versions would automatically cause an application to fail the security review). The list would include major products like:
+    - Windows XP, Vista, System 7
+    - Windows NT (NT4 and 2000)
+    - Windows 9x (95, 98, Me)
+    - Microsoft Office (Word, Excel, Access, PowerPoint, Outlook)
+    - Internet Explorer (including Outlook Express)
+    - Visual Studio (Visual C++, Visual Basic, Visual FoxPro) (Some parts of Visual Studio like the Base Class Libraries that ship with the .NET Framework were written using C# but the C# compiler itself is written in C++.)
+    - Exchange
+    - SQL 
+    
+- **KDE** (K Desktop Environment) : powerful Open Source graphical desktop environment for Unix workstations. It is one of the leading desktop environments for Linux. It consists of about 300 different packages written in C++, including an office suite, a browser, development tools, games, and multimedia apps.
+
+> ℹ️ See [Applications](https://www.stroustrup.com/applications.html) (stroustrup.com)
+
 ## Compilation
 
 # Basic stuff
@@ -322,6 +352,8 @@ A `static` data member is useful for maintaining a shared data among all instanc
 
 #### `const`
 
+#### `mutable`
+
 ***
 
 ## Scope
@@ -450,7 +482,7 @@ void    example(void)
 >   {
 >       // i cannot be redeclared
 >       std::cout << i << std::endl;
->       } // i's scope ends
+>   } // i's scope ends
 >   ```
 >- In a `switch` statement, a **single scope** is created, encompassing all case labels and their statements.
 >   ```cpp
