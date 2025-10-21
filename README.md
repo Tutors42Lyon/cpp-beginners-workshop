@@ -735,7 +735,7 @@ func();
 > ⚠️ **`using namespace` is not safe at all**
 >
 > Especially at global scope, it introduces mutliple significant risks, particularly in large, complex or evolving codebases.
->- **Name collision** : importing an entire `namespace` (per example the often seen : `using namesace std;`) floods the current scopes with thousands of identifiers. It might leeds to name collision with your code or some external librairies.
+>- **Name collision** : importing an entire `namespace` (for example the often seen : `using namesace std;`) floods the current scopes with thousands of identifiers. It might leeds to name collision with your code or some external librairies.
 >- **Readability loss** : qualifying names with their namespaces (`std::cout`) makes it immediately clear which data (datatype, function, variable...) is being referenced.
 
 ##### Example
@@ -967,14 +967,32 @@ There are 4 predefined stream objects in the `std`'s [namespace](#namespace).
 
 ### The `iostate` flags
 
-The `ios_base` class maintains 4 **state flags** (called ***iostates***) that indicate **stream condition** across **i/o operations**:
+The `ios_base` class maintains 4 **state flags** (called ***iostates***) that indicate **stream condition** across **I/O operations**:
 
 - ***goodbit***: Normal state, **successful**.
 - ***eofbit***: **End-of-file** reached during input operation.
 - ***failbit***: **Non-fatal** error occurred (format error, conversion failure).
 - ***badbit***: **Fatal** error occurred (hardware failure, corrupted stream).
 
-> ℹ️ See [`iostat` flags](https://en.cppreference.com/w/cpp/io/ios_base/iostate) (cppreference.com)
+> 💡 **How streams can have multiple flags set ?**
+>
+> Given that flags are actually **bits within a single integer**, the stream can have any combination of them set at once.
+> |   Flag      |   *Decimal* value     |   *Binary* value (simplified) |    *Binary* value (full)                  |
+> | ----------- | --------------------- | ----------------------------- |  ---------------------------------------- |
+> |***goodbit***|                  0    |                       0000    |  00000000 00000000 00000000 00000000      |
+> |***eofbit*** |                  2    |                       0010    |  00000000 00000000 00000000 000000**1**0  |
+> |***failbit***|                  1    |                       0001    |  00000000 00000000 00000000 0000000**1**  |
+> |***badbit*** |                  4    |                       0100    |  00000000 00000000 00000000 00000**1**00  |
+> 
+> Let's combine for example ***failbit*** and ***eofbit***:
+> |   Flags                         |   *Decimal* value     |   *Binary* value (simplified) |    *Binary* value (full)                  |
+> | ------------------------------- | --------------------- | ----------------------------- |  ---------------------------------------- |
+> | ***failbit*** and ***eofbit***  |                  3    |                       0011    |  00000000 00000000 00000000 000000**11**  | 
+>
+>> ℹ️ See:
+>>- [`iostat` flags](https://en.cppreference.com/w/cpp/io/ios_base/iostate) (cppreference.com)
+>>- [*What are bit flags ?*](https://dev.to/molo-7/what-are-bit-flags-and-why-do-they-matter-in-low-level-programming-42kf) (dev.to)
+>>- [Bit Manipulation](https://www.geeksforgeeks.org/dsa/all-about-bit-manipulation/) (geeksforgeeks.org)
 
 ### Checking stream state
 
@@ -984,6 +1002,9 @@ You can **check** these **state flags** with these following [methods](#members-
 - `eof()`: Returns true when *eofbit* is set.
 - `fail()`: Returns true when *failbit* or *badbit* is set.
 - `bad()`: Returns true when *badbit* is set.
+
+
+
 
 ### Manipulating stream state
 
@@ -996,9 +1017,9 @@ You also can **manipulate** these **state flags**:
     > ```cpp
     > std::string input;
     >
-    > input.clear();
+    > input.clear();                            // iostate reset to goodbit
     > // or
-    > input.clear(ios::eof);
+    > input.clear(ios::eofbit);                 // iostate reset to eofbit
     > // or
     > input.clear(ios::failbit | ios::badbit);
     > ```
