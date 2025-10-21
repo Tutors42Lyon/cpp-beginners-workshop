@@ -1,9 +1,9 @@
 # 🏗️ WIP
-**Which means** :
-- **Incomplete** informations
+**Which means**:
+- **Incomplete** information
 - **Typos**
-- Some **internal link** may not redirect you as wanted
-- Some **source** can be missing
+- Some **internal links** may not redirect you as wanted
+- Some **sources** can be missing
 
 ***
 
@@ -16,10 +16,9 @@
 - **Extensibility and Compatibility**: Designed to extend C without breaking compatibility, allowing programs to grow from C to C++ smoothly.
 - **Type Safety with Flexibility**: Strong static typing that supports user-defined types while allowing low-level access when needed.
 
-
 ## Some applications
 
-- **Adobe Systems** : Most applications are developed in C++:
+- **Adobe Systems**: Most applications are developed in C++:
     - Photoshop & ImageReady,
     - Illustrator,
     - Acrobat,
@@ -29,9 +28,9 @@
 
 - **Apple** Finder
 
-- **Dassault Systems** : Catia v5 (CAD) on which was notably conceived all recent Airbus planes.
+- **Dassault Systems**: Catia v5 (CAD) on which was notably conceived all recent Airbus planes.
 
-- **Microsoft** : Literally everything at Microsoft is built using recent flavors of Visual C++ (using older versions would automatically cause an application to fail the security review). The list would include major products like:
+- **Microsoft**: Literally everything at Microsoft is built using recent flavors of Visual C++ (using older versions would automatically cause an application to fail the security review). The list would include major products like:
     - Windows XP, Vista, System 7
     - Windows NT (NT4 and 2000)
     - Windows 9x (95, 98, Me)
@@ -41,7 +40,7 @@
      - Exchange
     - SQL 
     
-- **KDE** (K Desktop Environment) : powerful open source graphical desktop environment for Unix workstations. It consists of about 300 different packages written in C++, including an office suite, a browser, development tools, games, and multimedia apps.
+- **KDE** (K Desktop Environment): powerful open source graphical desktop environment for Unix workstations. It consists of about 300 different packages written in C++, including an office suite, a browser, development tools, games, and multimedia apps.
 
 > ℹ️ See [Applications](https://www.stroustrup.com/applications.html) (stroustrup.com)
 
@@ -62,7 +61,7 @@ int main(void)
 }
 ```
 
-Let's break this program down to introduce some core-concepts :
+Let's break this program down to introduce some core-concepts:
 
 ```cpp
 #include <iostream>
@@ -70,11 +69,11 @@ Let's break this program down to introduce some core-concepts :
 
 - `#` indicates a **preprocessor** statement. Before your code is compiled, the preprocessor *processes* all these statements.
 
-- As in C, you need to `include` **libraries** to be able to use them.
+- Similarly to C, you need to `include` **libraries** to be able to use them.
 
 - `iostream` is the **standard input/output** [stream](#stream) library. Which here, allows you to use `std::cout` and `std::endl`
 
-> ℹ️ See :
+> ℹ️ See:
 >- [Preprocessor](https://en.cppreference.com/w/cpp/preprocessor.html) (cppreference.com)
 >- [*How to use librairies in C++*](https://stackoverflow.com/questions/10358745/how-to-use-libraries) (stackoverflow.com)
 >- [`iostream`](https://en.cppreference.com/w/cpp/header/iostream.html) (cppreference.com)
@@ -94,7 +93,7 @@ std::cout << "Hello World !" << std::endl;
 
 - `endl` stands for ***end line***, which is a **manipulator** that inserts the newline character (`\n`) and then flushes the output buffer.
 
-> ℹ️ See :
+> ℹ️ See:
 >- [C++ Standard Library](https://en.cppreference.com/w/cpp/standard_library.html) (cppreference.com) or [C++ Standard Library](https://en.wikipedia.org/wiki/C%2B%2B_Standard_Library) (wikipedia.org) 
 >- [Scope resolution operator](https://www.geeksforgeeks.org/cpp/scope-resolution-operator-in-c/) (geeksforgeeks.org)
 >- [Manipulators in C++](https://www.geeksforgeeks.org/cpp/manipulators-in-c-with-examples/) (geeksforgeeks.org)
@@ -150,6 +149,8 @@ The **destructor** is run when an object’s lifetime ends (when it goes out of 
 - Overloading destructors is not allowed (can never take arguments or return a value).
 
 - Can be virtual (should be for [polymorphic](#polymorphism) base classes)
+
+> ℹ️ See [`virtual` functions](https://www.geeksforgeeks.org/cpp/virtual-function-cpp/) (geeksforgeeks.org)
 
 ```cpp
 ~className(); // No overloading
@@ -424,7 +425,7 @@ int	main(void)
 }
 ```
 
-> ℹ️ See :
+> ℹ️ See:
 >- [Static Data Members](https://www.geeksforgeeks.org/cpp/cpp-static-data-members/) (geeksforgeeks.org)
 >- [ODR (One Definition Rule)](https://en.cppreference.com/w/cpp/language/definition.html) (cppreference.com)
 >- [*Why does a static data member need to be defined outside of the class ?*](https://stackoverflow.com/questions/18749071/why-does-a-static-data-member-need-to-be-defined-outside-of-the-class) (stackoverflow.com)
@@ -462,7 +463,7 @@ int	main(void)
 }
 ```
 
-> ℹ️ See :
+> ℹ️ See:
 >- [Static Members Function](https://www.geeksforgeeks.org/cpp/static-member-function-in-cpp/) (geeksforgeeks.org)
 >- [Storage class specifiers](https://en.cppreference.com/w/cpp/language/storage_duration.html) (cppreference.com)
 
@@ -517,7 +518,7 @@ int main(void)
 }
 ```
 
-> ℹ️ See :
+> ℹ️ See:
 >- [Constant Objects and Constant Member Functions](https://faculty.cs.niu.edu/~mcmahon/CS241/Notes/const_objects_and_member_functions.html) (faculty.cs.niu.edu)
 >- [Storage class specifiers](https://en.cppreference.com/w/cpp/language/storage_duration.html) (cppreference.com)
 
@@ -542,7 +543,7 @@ Before starting digging into C++ scopes, we have to understand these three criti
 - **Lifetime** (or *storage duration*), determines when an object exists in memory : the time spent between memory allocation and deallocation. The concept of **lifetime** differs from the **scope**: a variable may go out of scope while its memory persists.
     > *When does this name exists ?* 
     >
-    > ℹ️ See :
+    > ℹ️ See:
     >- [Objects](#objects)
     >- [Memory allocation, pointers and references](#memory-allocation-pointers--references)
 
@@ -554,7 +555,7 @@ Before starting digging into C++ scopes, we have to understand these three criti
     >>
     >> Linkage refers to the **visibility** of variables/functions **across different translation units**.
     >>
-    >> ℹ️ See :
+    >> ℹ️ See:
     >>- [Translation units](https://en.wikipedia.org/wiki/Translation_unit_%28programming%29) (wikipedia.org)
     >>- [Translation units and linkage](https://learn.microsoft.com/en-us/cpp/cpp/program-and-linkage-cpp?view=msvc-170) (learn.microsoft.com) and [Language Linkage](https://en.cppreference.com/w/cpp/language/language_linkage.html) (wikipedia.org)
     >>- [C++ Linkage explained](https://cppscripts.com/cpp-linkage) (cppscripts.com)
@@ -579,7 +580,7 @@ Global identifiers have external linkage by default, making them visible across 
 int         external_var = 1; // external linkage (visible across files)
 static int  internal_var = 2; // internal linkage (local to this file)
 ```
-> ℹ️ See :
+> ℹ️ See:
 >- [Translation units](https://en.wikipedia.org/wiki/Translation_unit_%28programming%29) (wikipedia.org)
 >- [Translation units and linkage](https://learn.microsoft.com/en-us/cpp/cpp/program-and-linkage-cpp?view=msvc-170) (learn.microsoft.com) and [Language Linkage](https://en.cppreference.com/w/cpp/language/language_linkage.html) (wikipedia.org)
 >- [C++ Linkage explained](https://cppscripts.com/cpp-linkage) (cppscripts.com)
@@ -842,31 +843,92 @@ class Player
 
 Streams embody major C++ concepts such as **object-oriented design**, **operator overloading**, and ***templating***.
 
-> 💡
+> 💡 **Acknowledgment**
 >
 > Here is why this part will be as **complete as possible**, it can be too much if you **only want to use streams**.
 >
 > This said, keep in mind that understanding **streams and their architecture** is a big step towards an **accurate understanding of the language**.
 
 
-## Stream Architecture and Design Philosophy
+## Stream architecture & design philosophy
 
 The stream system provides a **unified**, **type-safe** interface for **input/output operations** that **abstracts the underlying data sources and destinations** while - again - maintaining great performance and flexibility.
 
-## Historical Context and Design Reasoning
+## Context & design Reasoning
 
-The `iostream` library was designed to **replace C's stdio functions** in a more robust, type-safe way.
+The `iostream` library was designed to **replace C's stdio functions** in a more robust and type-safe way.
 
-Unlike C's `printf`/`scanf` family, which relies on **format strings** and **variadic arguments**, C++ streams use **operator overloading** and **template specialization** to achieve compile-time type **safety** and runtime **efficiency**.
+Unlike C's `printf`/`scanf` family, which relies on **format strings** and **variadic arguments**, C++ streams use **operator overloading** and **template specialization** to achieve compile-time **type safety** and runtime **efficiency**.
 The design aims to separate **formatting logic** (ex: `%s`, `%d`... from `stdio`) from **transport mechanisms** (ex: `FILE`, `fd`..), allowing to work with **console I/O**, **file operations**, and **string manipulations** with a single logic.
 
-> ℹ️ See [Template Specialization](https://www.geeksforgeeks.org/cpp/template-specialization-c/) (geeksforgeeks.org)
+> ℹ️ See:
+>- [`iostream`](https://en.cppreference.com/w/cpp/header/iostream.html) (cppreference.com) or [`iostream`](https://cplusplus.com/reference/iostream/) (cplusplus.com)
+>- [Template Specialization](https://www.geeksforgeeks.org/cpp/template-specialization-c/) (geeksforgeeks.org)
 
-## Stream `class` hierarchy and inheritence model
+## Stream class hierarchy and inheritence model
 
-The **stream `class` hierarchy** follows a carefully desgined [inheritence](#inheritence) pattern that demonstrates various inheritence problem resolution such as **virtual** inheritence, **diamond** inheritence or *simply* multiple inheritence.
+The **stream class hierarchy** follows a carefully desgined [inheritence](#inheritence) pattern that demonstrates various inheritence problem resolution such as **virtual** inheritence, **diamond** inheritence or *simply* multiple inheritence.
 
-> ℹ️ See :
->- [ios_base](https://www.geeksforgeeks.org/cpp/template-specialization-c/) (cppreference.com)
+![img_stream_classes_herarchy](./assets/Hierarchy-of-Stream-Classess-in-iostream.png)
+
+### Prequisites
+
+- 🏗️ ***Templates***
+- 🏗️ ***Traits***
+> ℹ️ See [*Understanding C++ Traits and Making Them Efficient*](https://stackoverflow.com/questions/66818748/understanding-c-traits-and-making-them-efficient) (stackoverflow.com) and [Character Traits](https://en.cppreference.com/w/cpp/string/char_traits.html) (cppreference.com)
+- Inheritence
+
+### Base classes
+
+- `ios_base`: The foundational *non-template* class that contains, **formatting state**, **error flags** and [**static members**](#static--const-keywords).
+
+    > ℹ️ See:
+    >- [`ios_base`](https://en.cppreference.com/w/cpp/io/ios_base.html) (cppreference.com)
+    >- [Format Control Using the Stream's Format State](https://stdcxx.apache.org/doc/stdlibug/28-3.html) (stdcxx.apache.org)
+
+
+- `basic_ios<CharT, Traits>`: **Template** class [derived](#inheritence) from `ios_base`.
+It introduces the concept of **character traits**, enabling streams to work with different **character types** (`char`, `wchar_t` (wide character)) while maintaining type safety.
+
+    > 💡 **Wide characters**
+    >
+    > Wide character equivalents (wcin, wcout, wcerr, wclog) are provided for wchar_t-based operations. These objects are guaranteed to be constructed before main() begins and destroyed after main() ends, ensuring their availability throughout program execution.
+    >    
+    >> ℹ️ See:
+    >>- [`basic_ios<CharT, Traits>`](https://en.cppreference.com/w/cpp/io/basic_ios/basic_ios.html) (cppreference.com)
+    >>- [`CharT`](https://en.cppreference.com/w/cpp/locale/ctype/widen) (cppreference.com)
+    >>- [Types (Character types)](https://en.cppreference.com/w/cpp/language/types.html#Character_types) (cppreference.com)
+
+### Stream Interfaces classes
+
+- `basic_istream<CharT, Traits>`: [**Inherits virtually**](#inheritence) from `basic_ios` and provides **formatted input** operations. This class implements the **extraction operator (`>>`)** and various `get()` methods for character-level input.
+
+    > 💡 ***Virtual inheritance*** prevents **diamond inheritance problems** when `basic_iostream` inherits from both `basic_istream` and `basic_ostream`. 
+    >> ℹ️ See [`basic_istream<CharT, Traits>`](https://en.cppreference.com/w/cpp/io/basic_istream.html) (cppreference.com)
+
+
+- `basic_ostream<CharT, Traits>`: [**Inherits virtually**](#inheritence) from `basic_ios`  and provides **formatted output** operations. Implements the **insertion operator (`<<`)** and `put()`/`write()` methods for character and string output.
+
+    > ℹ️ See [`basic_ostream<CharT, Traits>`](https://en.cppreference.com/w/cpp/io/basic_ostream.html) (cppreference.com)
+
+
+- `basic_iostream<CharT, Traits>`: Uses [**multiple inheritance**](#inheritence) to combine `basic_istream` and `basic_ostream`.
+
+    > ℹ️ See [`basic_iostream<CharT, Traits>`](https://en.cppreference.com/w/cpp/io/basic_iostream.html) (cppreference.com)
+
+
+### Stream Buffer architecture
+
+- `basic_streambuf<CharT, Traits>`: defines an interface between stream objects (like `cin`, `cout`, or file streams) and their underlying data sources or destinations, such as files, memory buffers, or network sockets.
+
+    > ℹ️ See :
+    >- [`basic_streambuf<CharT, Traits>`](https://en.cppreference.com/w/cpp/io/basic_streambuf.html) (cppreference.com)
+    >- [`virtual` functions](https://www.geeksforgeeks.org/cpp/virtual-function-cpp/) (geeksforgeeks.org)
+
+## Standard stream objects and global state
+
+
+> ℹ️ See:
+>- [x](x) (x)
 
 ***
