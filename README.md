@@ -888,18 +888,18 @@ The **stream class hierarchy** follows a carefully desgined [inheritence](#inher
 
 
 - `basic_ios<CharT, Traits>`: **Template** class [derived](#inheritence) from `ios_base`.
-It introduces the concept of **character traits**, enabling streams to work with different **character types** (`char`, `wchar_t` (wide character)) while maintaining type safety.
+It introduces the concept of **character traits**, enabling streams to work with different **character types** (`char`, `wchar_t` (*wide character*)) while maintaining type safety.
 
     > 💡 **Wide characters**
     >
-    > Wide character equivalents (wcin, wcout, wcerr, wclog) are provided for wchar_t-based operations. These objects are guaranteed to be constructed before main() begins and destroyed after main() ends, ensuring their availability throughout program execution.
+    > *Wide character equivalents* (`wcin`, `wcout`, `wcerr`, `wclog`) are provided for `wchar_t`-based operations. These objects are guaranteed to be constructed **before `main` function begins** and **destroyed after it ends**, **ensuring their availability throughout program execution**.
     >    
     >> ℹ️ See:
     >>- [`basic_ios<CharT, Traits>`](https://en.cppreference.com/w/cpp/io/basic_ios/basic_ios.html) (cppreference.com)
     >>- [`CharT`](https://en.cppreference.com/w/cpp/locale/ctype/widen) (cppreference.com)
     >>- [Types (Character types)](https://en.cppreference.com/w/cpp/language/types.html#Character_types) (cppreference.com)
 
-### Stream Interfaces classes
+### Stream interfaces classes
 
 - `basic_istream<CharT, Traits>`: [**Inherits virtually**](#inheritence) from `basic_ios` and provides **formatted input** operations. This class implements the **extraction operator (`>>`)** and various `get()` methods for character-level input.
 
@@ -917,7 +917,7 @@ It introduces the concept of **character traits**, enabling streams to work with
     > ℹ️ See [`basic_iostream<CharT, Traits>`](https://en.cppreference.com/w/cpp/io/basic_iostream.html) (cppreference.com)
 
 
-### Stream Buffer architecture
+### Stream buffer architecture
 
 - `basic_streambuf<CharT, Traits>`: defines an interface between stream objects (like `cin`, `cout`, or file streams) and their underlying data sources or destinations, such as files, memory buffers, or network sockets.
 
