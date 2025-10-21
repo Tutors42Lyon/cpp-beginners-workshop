@@ -1076,9 +1076,4 @@ Streams can also be configured to `throw` **exceptions** when a specific error o
 
 ### Extraction operator `<<`
 
-
-
-> ℹ️ See:
->- [x](x) (x)
-
 ***
