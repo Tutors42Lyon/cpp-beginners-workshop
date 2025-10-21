@@ -984,7 +984,11 @@ The `ios_base` class maintains 4 **state flags** (called ***iostates***) that in
 > |***failbit***|                  1    |                       0001    |  00000000 00000000 00000000 0000000**1**  |
 > |***badbit*** |                  4    |                       0100    |  00000000 00000000 00000000 00000**1**00  |
 > 
+> Now, to make a bit combination, you just have to use the **OR** logic operator. 
+> If a given bit is set to **1** on whatever operation member, the same bit in the result will be **1**.
+>
 > Let's combine for example ***failbit*** and ***eofbit***:
+>
 > |   Flags                         |   *Decimal* value     |   *Binary* value (simplified) |    *Binary* value (full)                  |
 > | ------------------------------- | --------------------- | ----------------------------- |  ---------------------------------------- |
 > | ***failbit*** and ***eofbit***  |                  3    |                       0011    |  00000000 00000000 00000000 000000**11**  | 
@@ -999,16 +1003,29 @@ The `ios_base` class maintains 4 **state flags** (called ***iostates***) that in
 You can **check** these **state flags** with these following [methods](#members-attributes--methods):
 
 - `good()`: Returns true only when *goodbit* is set (no error flags).
+
+    ```cpp
+    
+    ```
+
 - `eof()`: Returns true when *eofbit* is set.
+
+    ```cpp
+    
+    ```
 - `fail()`: Returns true when *failbit* or *badbit* is set.
+
+    ```cpp
+    
+    ```
+
 - `bad()`: Returns true when *badbit* is set.
 
-
-
+    ```cpp
+    
+    ```
 
 ### Manipulating stream state
-
-🏗️ ***WIP***
 
 You also can **manipulate** these **state flags**:
 
