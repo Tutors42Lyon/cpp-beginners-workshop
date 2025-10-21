@@ -1002,28 +1002,29 @@ The `ios_base` class maintains 4 **state flags** (called ***iostates***) that in
 
 You can **check** these **state flags** with these following [methods](#members-attributes--methods):
 
-- `good()`: Returns true only when *goodbit* is set (no error flags).
+- `good()`: Returns true if *goodbit* is set (no error flags).
 
     ```cpp
-    
+   return (std::cin.good());
     ```
 
 - `eof()`: Returns true when *eofbit* is set.
 
     ```cpp
-    
+   return (std::cin.eof());
     ```
 - `fail()`: Returns true when *failbit* or *badbit* is set.
 
     ```cpp
-    
+   return (std::cin.fail());
+
     ```
 
 - `bad()`: Returns true when *badbit* is set.
 
     ```cpp
-    
-    ```
+   return (std::cin.bad());
+   ```
 
 ### Manipulating stream state
 
@@ -1032,34 +1033,27 @@ You also can **manipulate** these **state flags**:
 - `clear()`: Resets all flags to *goodbit* or `clear(iostate)` to set a specific state flags.
     
     > ```cpp
-    > std::string input;
-    >
-    > input.clear();                            // iostate reset to goodbit
+    > std::cout.clear();                                        // cout's state reset to goodbit (0)
     > // or
-    > input.clear(ios::eofbit);                 // iostate reset to eofbit
+    > std::cout.clear(std::ios::eofbit);                        // cout's state reset to eofbit  (2)
     > // or
-    > input.clear(ios::failbit | ios::badbit);
+    > std::cout.clear(std::ios::failbit | std::ios::badbit);    // cout's state reset to both (failbit (1) | badbit (4)) (5)
     > ```
     >> ℹ️ See [`clear`](https://en.cppreference.com/w/cpp/io/basic_ios/clear.html) (cppreference.com)
 
 - `setstate(iostate)`: Sets additional state flags without clearing others
     
     > ```cpp
-    > std::string input;
-    >
-    > input.setstate(ios::eof);
+    > std::cout.setstate(std::ios::eofbit);                        // added eofbit (2) to cout's state
     > // or
-    > input.setstate(ios::good | ios::eof);
+    > std::cout.setstate(std::ios::failbit | std::ios::badbit);    // added both (failbit (1) | badbit (4)) (5) to cout's state
     > ```
     >> ℹ️ See [`setstate`](https://en.cppreference.com/w/cpp/io/basic_ios/setstate.html) (cppreference.com)
 
 - `rdstate()`: Returns current state as iostate bitmask
 
     > ```cpp
-    > std::string input;
-    >
-    > input.clear();
-    > input.clear();
+    > std::cout << std::cout.rdstate() << std::endl;    // outputs cout's state
     > ```
     >> ℹ️ See [`rdstate`](https://en.cppreference.com/w/cpp/io/basic_ios/rdstate.html) (cppreference.com)
 
@@ -1075,9 +1069,14 @@ Streams can also be configured to `throw` **exceptions** when a specific error o
 
 ## Operator overloading in stream operations
 
+🏗️ ***WIP***
+
 ### Insertion operator `<<`
 
+
 ### Extraction operator `<<`
+
+
 
 > ℹ️ See:
 >- [x](x) (x)
