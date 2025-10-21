@@ -927,6 +927,63 @@ It introduces the concept of **character traits**, enabling streams to work with
 
 ## Standard stream objects and global state
 
+There are 4 predefined stream objects in the `std`'s [namespace](#namespace).
+
+- `cin`: `basic_istream<char>` connected to standard input
+
+- `cout`: `basic_ostream<char>` connected to standard output
+
+- `cerr`: `basic_ostream<char>` connected to standard error (**unbuffered**)
+
+- `clog`: `basic_ostream<char>` connected to standard error (**buffered**)
+
+> 💡 Note that for wide characters, `wcin`, `wcout`, `wcerr` and `wclog` also exist.
+
+## Stream state management and error handling
+
+### The `iostates` flags
+
+The `ios_base` class maintains 4 **state flags** (called ***iostates***) that indicate **stream condition** across **i/o operations**:
+
+- ***goodbit***: Normal state, **successful**.
+- ***eofbit***: **End-of-file** reached during input operation.
+- ***failbit***: **Non-fatal** error occurred (format error, conversion failure).
+- ***badbit***: **Fatal** error occurred (hardware failure, corrupted stream).
+
+> ℹ️ See [`ios_base` flags](https://en.cppreference.com/w/cpp/io/ios_base/iostate) (cppreference.com)
+
+### Checking
+
+You can **check** these **state flags** with these following [methods](#members-attributes--methods):
+
+- `good()`: Returns true only when *goodbit* is set (no error flags).
+- `eof()`: Returns true when *eofbit* is set.
+- `fail()`: Returns true when *failbit* or *badbit* is set.
+- `bad()`: Returns true when *badbit* is set.
+
+### Manipulating
+
+You also can **manipulate** these **state flags**:
+
+- `clear()`: Resets all flags to *goodbit* or `clear(iostate)` to set a specific state flag.
+    > ℹ️ See [ios_base::clear](https://en.cppreference.com/w/cpp/io/basic_ios/clear.html) (cppreference.com)
+
+- `setstate(iostate)`: Sets additional state flags without clearing others
+    > ℹ️ See [ios_base::setstate](https://en.cppreference.com/w/cpp/io/basic_ios/setstate.html) (cppreference.com)
+
+- `rdstate()`: Returns current state as iostate bitmask
+    > ℹ️ See [ios_base::rdstate](https://en.cppreference.com/w/cpp/io/basic_ios/rdstate.html) (cppreference.com)
+
+### Raising exceptions
+
+Streams can also be configured to `throw` **exceptions** when a specific error occurs using the `exceptions(iostate)` method
+> ℹ️ See [ios_base::exceptions](https://en.cppreference.com/w/cpp/io/basic_ios/exceptions) (cppreference.com)
+
+## Operator overloading in stream operations
+
+### Insertion operator `<<`
+
+### Extraction operator `<<`
 
 > ℹ️ See:
 >- [x](x) (x)
