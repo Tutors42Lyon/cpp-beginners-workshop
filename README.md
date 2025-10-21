@@ -37,8 +37,8 @@
     - Windows 9x (95, 98, Me)
     - Microsoft Office (Word, Excel, Access, PowerPoint, Outlook)
     - Internet Explorer (including Outlook Express)
-    - Visual Studio (Visual C++, Visual Basic, Visual FoxPro) (Some parts of Visual Studio like the Base Class Libraries that ship with the .NET Framework were written using C# but the C# compiler itself is written in C++.)
-    - Exchange
+     - Visual Studio (Visual C++, Visual Basic, Visual FoxPro) (Some parts of Visual Studio like the Base Class Libraries that ship with the .NET Framework were written using C# but the C# compiler itself is written in C++.)
+     - Exchange
     - SQL 
     
 - **KDE** (K Desktop Environment) : powerful open source graphical desktop environment for Unix workstations. It consists of about 300 different packages written in C++, including an office suite, a browser, development tools, games, and multimedia apps.
@@ -824,9 +824,9 @@ class Player
        
     	void		displayPlayer(void)
     	{
-    		std::cout << this->_id << " | "
-    			<< this->_level << " | "
-    			<< this->_name << std::endl;
+    		std::cout   << this->_id << " | "
+                            << this->_level << " | "
+                            << this->_name << std::endl;
     	};
     
     private:
@@ -838,10 +838,35 @@ class Player
 
 ***
 
-# Streams
+# Stream
 
-***
+Streams embody major C++ concepts such as **object-oriented design**, **operator overloading**, and ***templating***.
 
-# std::string/std::stringstream
+> 💡
+>
+> Here is why this part will be as **complete as possible**, it can be too much if you **only want to use streams**.
+>
+> This said, keep in mind that understanding **streams and their architecture** is a big step towards an **accurate understanding of the language**.
+
+
+## Stream Architecture and Design Philosophy
+
+The stream system provides a **unified**, **type-safe** interface for **input/output operations** that **abstracts the underlying data sources and destinations** while - again - maintaining great performance and flexibility.
+
+## Historical Context and Design Reasoning
+
+The `iostream` library was designed to **replace C's stdio functions** in a more robust, type-safe way.
+
+Unlike C's `printf`/`scanf` family, which relies on **format strings** and **variadic arguments**, C++ streams use **operator overloading** and **template specialization** to achieve compile-time type **safety** and runtime **efficiency**.
+The design aims to separate **formatting logic** (ex: `%s`, `%d`... from `stdio`) from **transport mechanisms** (ex: `FILE`, `fd`..), allowing to work with **console I/O**, **file operations**, and **string manipulations** with a single logic.
+
+> ℹ️ See [Template Specialization](https://www.geeksforgeeks.org/cpp/template-specialization-c/) (geeksforgeeks.org)
+
+## Stream `class` hierarchy and inheritence model
+
+The **stream `class` hierarchy** follows a carefully desgined [inheritence](#inheritence) pattern that demonstrates various inheritence problem resolution such as **virtual** inheritence, **diamond** inheritence or *simply* multiple inheritence.
+
+> ℹ️ See :
+>- [ios_base](https://www.geeksforgeeks.org/cpp/template-specialization-c/) (cppreference.com)
 
 ***
