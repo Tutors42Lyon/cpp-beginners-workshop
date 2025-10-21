@@ -931,17 +931,41 @@ There are 4 predefined stream objects in the `std`'s [namespace](#namespace).
 
 - `cin`: `basic_istream<char>` connected to standard input
 
+    > ```cpp
+    > std::cout << "Hello World !" << std::endl;
+    > ```
+    > ℹ️ See [`cout`](https://en.cppreference.com/w/cpp/io/cout.html) (cppreference.com)
+
 - `cout`: `basic_ostream<char>` connected to standard output
+
+    > ```cpp
+    > std::string input;
+    >
+    > std::cin >> input;
+    > ```
+    >> ℹ️ See:
+    >>- [`cin`](https://en.cppreference.com/w/cpp/io/cin.html) (cppreference.com)
+    >>- [`std::string`](https://en.cppreference.com/w/cpp/string/basic_string.html) (cppreference.com)
 
 - `cerr`: `basic_ostream<char>` connected to standard error (**unbuffered**)
 
+    > ```cpp
+    > std::cerr << "An error occured" << std::endl;
+    > ```
+    >> ℹ️ See [`cerr`](https://en.cppreference.com/w/cpp/io/cerr.html) (cppreference.com)
+
 - `clog`: `basic_ostream<char>` connected to standard error (**buffered**)
+
+    > ```cpp
+    > std::clog << "Constructor called" << std::endl;
+    > ```
+    >> ℹ️ See [`clog`](https://en.cppreference.com/w/cpp/io/clog.html) (cppreference.com)
 
 > 💡 Note that for wide characters, `wcin`, `wcout`, `wcerr` and `wclog` also exist.
 
 ## Stream state management and error handling
 
-### The `iostates` flags
+### The `iostate` flags
 
 The `ios_base` class maintains 4 **state flags** (called ***iostates***) that indicate **stream condition** across **i/o operations**:
 
@@ -950,9 +974,9 @@ The `ios_base` class maintains 4 **state flags** (called ***iostates***) that in
 - ***failbit***: **Non-fatal** error occurred (format error, conversion failure).
 - ***badbit***: **Fatal** error occurred (hardware failure, corrupted stream).
 
-> ℹ️ See [`ios_base` flags](https://en.cppreference.com/w/cpp/io/ios_base/iostate) (cppreference.com)
+> ℹ️ See [`iostat` flags](https://en.cppreference.com/w/cpp/io/ios_base/iostate) (cppreference.com)
 
-### Checking
+### Checking stream state
 
 You can **check** these **state flags** with these following [methods](#members-attributes--methods):
 
@@ -961,23 +985,55 @@ You can **check** these **state flags** with these following [methods](#members-
 - `fail()`: Returns true when *failbit* or *badbit* is set.
 - `bad()`: Returns true when *badbit* is set.
 
-### Manipulating
+### Manipulating stream state
+
+🏗️ ***WIP***
 
 You also can **manipulate** these **state flags**:
 
-- `clear()`: Resets all flags to *goodbit* or `clear(iostate)` to set a specific state flag.
-    > ℹ️ See [ios_base::clear](https://en.cppreference.com/w/cpp/io/basic_ios/clear.html) (cppreference.com)
+- `clear()`: Resets all flags to *goodbit* or `clear(iostate)` to set a specific state flags.
+    
+    > ```cpp
+    > std::string input;
+    >
+    > input.clear();
+    > // or
+    > input.clear(ios::eof);
+    > // or
+    > input.clear(ios::failbit | ios::badbit);
+    > ```
+    >> ℹ️ See [`clear`](https://en.cppreference.com/w/cpp/io/basic_ios/clear.html) (cppreference.com)
 
 - `setstate(iostate)`: Sets additional state flags without clearing others
-    > ℹ️ See [ios_base::setstate](https://en.cppreference.com/w/cpp/io/basic_ios/setstate.html) (cppreference.com)
+    
+    > ```cpp
+    > std::string input;
+    >
+    > input.setstate(ios::eof);
+    > // or
+    > input.setstate(ios::good | ios::eof);
+    > ```
+    >> ℹ️ See [`setstate`](https://en.cppreference.com/w/cpp/io/basic_ios/setstate.html) (cppreference.com)
 
 - `rdstate()`: Returns current state as iostate bitmask
-    > ℹ️ See [ios_base::rdstate](https://en.cppreference.com/w/cpp/io/basic_ios/rdstate.html) (cppreference.com)
+
+    > ```cpp
+    > std::string input;
+    >
+    > input.clear();
+    > input.clear();
+    > ```
+    >> ℹ️ See [`rdstate`](https://en.cppreference.com/w/cpp/io/basic_ios/rdstate.html) (cppreference.com)
 
 ### Raising exceptions
 
-Streams can also be configured to `throw` **exceptions** when a specific error occurs using the `exceptions(iostate)` method
-> ℹ️ See [ios_base::exceptions](https://en.cppreference.com/w/cpp/io/basic_ios/exceptions) (cppreference.com)
+Streams can also be configured to `throw` **exceptions** when a specific error occurs using the `exceptions(iostate)` method.
+
+🏗️ ***WIP***
+
+> ℹ️ See:
+>- [`exceptions`](https://en.cppreference.com/w/cpp/io/basic_ios/exceptions) (cppreference.com)
+>- [Exception Handling](https://www.geeksforgeeks.org/cpp/exception-handling-c/) (geeksforgeeks.org)
 
 ## Operator overloading in stream operations
 
