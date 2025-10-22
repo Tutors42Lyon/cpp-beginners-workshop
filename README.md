@@ -229,7 +229,7 @@ An object is an entity.
 ## Objects can be sorted in differents categories...
 - Fundamental type objects
 ```cpp
-int x = 42;
+int x;
 ```
 
 - Pointer objects :
@@ -432,6 +432,7 @@ int	main(void)
 - Can be called **without creating an object**.
 - Only has access to **static members (attributes or methods)**.
 - Cannot use `this` to refer to a member because they don't belong to any instance of the `class`.
+    > 💡 `this` is a pointer to the actual instance.
 - Useful when a function’s logic is **independent** of object state.
 - They cannot be associated with `virtual`, `const` or `volatile`.
 
@@ -453,7 +454,7 @@ class Entity
 int Entity::_value = 42;                            // definition & initialization
 
 int	main(void)
-{                                                   // no need to intanciate an object
+{                                                   // no need to instanciate an object
     std::cout << Entity::getValue() << std::endl;   // outputs 42
 
     return (0);
@@ -470,11 +471,11 @@ int	main(void)
 **Constant objects**
 - Object's **state** cannot be modified.
 - Cannot **call non-`const` member functions**.
-- `const` has to *close* the prototype, else that is the return datatype that is qualified as const.
+- `const` has to be writen at the end of the prototype, else this is the return datatype that will qualified as `const`.
 
 **Constant methods**
 - Can be called on **any type of object**.
-- Cannot **change value** of their own class members.
+- Can **only modify** `static` or `mutable` attributes.
 
 > 💡 **Good to know**
 >
@@ -516,6 +517,7 @@ int main(void)
 ```
 
 > ℹ️ See:
+>- [*What can a const member function change?*](https://stackoverflow.com/questions/6852717/what-can-a-const-member-function-change) (stackoverflow.com)
 >- [Constant Objects and Constant Member Functions](https://faculty.cs.niu.edu/~mcmahon/CS241/Notes/const_objects_and_member_functions.html) (faculty.cs.niu.edu)
 >- [Storage class specifiers](https://en.cppreference.com/w/cpp/language/storage_duration.html) (cppreference.com)
 
