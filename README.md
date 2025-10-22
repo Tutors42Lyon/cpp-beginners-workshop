@@ -329,9 +329,6 @@ sizeof(variable)
 >- **State**: `r1 = {width = 4, height = 2}` and `r2 = {width = 4, height = 3}` (different states)
 >- **Value**: `r1.width == r2.width` (both have a height of 4)
 
-## Quiz
-- Is a class itself an object ? [Y/N] (N)
-
 ***
 
 # Members: attributes & methods
@@ -780,16 +777,6 @@ int	main(void)
                 << ::func() << std::endl;       // displays 4 (global)
 }
 ```
-#### Quiz
-
-1. According to the previous example, what would be outputed by the following code ?
-
-```cpp
-// ...
-std::cout   << value << std::endl
-            << func() << std::endl;
-// ...
-```
 
 ***
 
@@ -1072,8 +1059,6 @@ Streams can also be configured to `throw` **exceptions** when a specific error o
 🏗️ ***WIP***
 
 ### Insertion operator `<<`
-
-
 ### Extraction operator `<<`
 
 ***
