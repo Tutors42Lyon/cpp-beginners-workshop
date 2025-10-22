@@ -1,7 +1,7 @@
 # 🏗️ WIP
 **Which means**:
 - **Incomplete** information
-- **Typos**
+- **Typos** and bad english
 - Some **internal links** may not redirect you as wanted
 - Some **sources** can be missing
 
