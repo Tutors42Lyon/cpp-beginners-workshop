@@ -970,8 +970,8 @@ The `ios_base` class maintains 4 **state flags** (called ***iostates***) that in
 > | ----------- | --------------------- | ----------------------------- |  ---------------------------------------- |
 > |***goodbit***|                  0    |                       0000    |  00000000 00000000 00000000 00000000      |
 > |***eofbit*** |                  2    |                       0010    |  00000000 00000000 00000000 000000**1**0  |
-> |***failbit***|                  1    |                       0001    |  00000000 00000000 00000000 0000000**1**  |
-> |***badbit*** |                  4    |                       0100    |  00000000 00000000 00000000 00000**1**00  |
+> |***badbit*** |                  1    |                       0100    |  00000000 00000000 00000000 00000**1**00  |
+> |***failbit***|                  4    |                       0001    |  00000000 00000000 00000000 0000000**1**  |
 >
 > Now, to make a bit combination, you just have to use the **OR** logic operator.
 > If a given bit is set to **1** on whatever operation member, the same bit in the result will be **1**.
@@ -980,8 +980,25 @@ The `ios_base` class maintains 4 **state flags** (called ***iostates***) that in
 >
 > |   Flags                         |   *Decimal* value     |   *Binary* value (simplified) |    *Binary* value (full)                  |
 > | ------------------------------- | --------------------- | ----------------------------- |  ---------------------------------------- |
-> | ***failbit*** and ***eofbit***  |                  3    |                       0011    |  00000000 00000000 00000000 000000**11**  |
+> | ***failbit*** and ***eofbit***  |                  6    |                       0110    |  00000000 00000000 00000000 00000**11**0  |
 >
+>
+> ⚠️ Iostate **flag values** can **depend on the implementation**, as they are ***implementation-defined constants***.
+>
+> ```cpp
+> using std::cout;
+> using std::endl;
+> 
+> int main(void)
+> {
+> 	cout    << std::ios::goodbit
+> 		    << std::ios::eofbit
+> 		    << std::ios::failbit
+> 		    << std::ios::badbit << endl;
+> 	
+> 	return (0);
+> }
+> ```
 >> ℹ️ See:
 >>- [`iostat` flags](https://en.cppreference.com/w/cpp/io/ios_base/iostate) (cppreference.com)
 >>- [*What are bit flags ?*](https://dev.to/molo-7/what-are-bit-flags-and-why-do-they-matter-in-low-level-programming-42kf) (dev.to)
