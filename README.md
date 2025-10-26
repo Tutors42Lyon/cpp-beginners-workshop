@@ -133,12 +133,18 @@ A **constructor** is a special [member function](#members-attributes--methods) e
 - A constructor without any parameter become the **default constructor**. It will be automatically called at the instance declaration.
 
 - If **no constructors are declared**, the compiler automatically generates a default constructor which is qualified as ***trivial*** : it **only** performs member and base class ***default initializations***.
+    > **Default initialization** depends on member's **datatype**
+    >- **Built-in types**: Remain **uninitialized**, contain indeterminate values (same logic as C).
+    >- **Class-type** members: Each member's default constructor is called.
 
 - If any constructor is declared, but **none is a default constructor**, the compiler **does not** generate one.
 
 ```cpp
 className(/* optionnal parameters */);
 ```
+> ℹ️ See:
+>- [Default Constructor](https://en.cppreference.com/w/cpp/language/default_constructor.html) (cppreference.com)
+>- [Default Initializations](https://en.cppreference.com/w/cpp/language/default_initialization.html) (cppreference.com)
 
 ### Destructor
 
