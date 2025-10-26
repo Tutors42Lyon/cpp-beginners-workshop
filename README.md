@@ -1076,7 +1076,46 @@ You also can **manipulate** these **state flags**:
 
 Streams can also be configured to `throw` **exceptions** when a specific error occurs using the `exceptions(iostate)` method.
 
-🏗️ ***WIP***
+```cpp
+cin.exceptions(std::ios::eofbit | std::ios::failbit | std::ios::badbit);
+```
+
+A possible implementation could be:
+
+```cpp
+std::string input;
+
+cin.exceptions(std::ios::eofbit | std::ios::failbit | std::ios::badbit);    // raising exceptions when one of these flags is set
+while (input.empty())
+{
+	try                                                                     // code section where 
+	{
+		std::cout << "Enter a command: "
+		getline(std::cin, input);                                           // operation on std::cin, sets flag under circumstances
+		std::cout << std::endl;
+	}
+	catch (const std::ios::failure &error)
+	{
+		if (std::cin.bad())                                                 // distinguishing which flag is set to adopt a given behavior
+		{
+            std::cout << error.what() << std::endl;
+			throw;                                                          // throw back the error to the next try/catch (if none is found, to main function)
+		}
+		else if (std::cin.eof())
+		{
+			std::cout << "Leaving." << std::endl;
+			throw;
+		}
+		else if (std::cin.fail())
+		{
+            std::cout << error.what() << std::endl;
+			std::cin.clear();                                               // have to clear flags to be able to re-loop again
+			input.clear();                                                  // reset the std::string (!= std::stream.clear())
+			continue;
+		}
+    }
+}
+```
 
 > ℹ️ See:
 >- [`exceptions`](https://en.cppreference.com/w/cpp/io/basic_ios/exceptions) (cppreference.com)
