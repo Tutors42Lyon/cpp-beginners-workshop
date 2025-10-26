@@ -1045,7 +1045,7 @@ You can **check** these **state flags** with these following [methods](#members-
 
 You also can **manipulate** these **state flags**:
 
-- `clear()`: Resets all flags to *goodbit* or `clear(iostate)` to set a specific state flags.
+- `clear()`: Resets all flags to *goodbit* or `clear(iostate)` to clear flags setting a specific state flags.
 
     > ```cpp
     > std::cout.clear();                                        // cout's state reset to goodbit (0)
@@ -1077,7 +1077,7 @@ You also can **manipulate** these **state flags**:
 Streams can also be configured to `throw` **exceptions** when a specific error occurs using the `exceptions(iostate)` method.
 
 ```cpp
-cin.exceptions(std::ios::eofbit | std::ios::failbit | std::ios::badbit);
+std::cin.exceptions(std::ios::failbit | std::ios::badbit);
 ```
 
 A possible implementation could be:
@@ -1085,34 +1085,29 @@ A possible implementation could be:
 ```cpp
 std::string input;
 
-cin.exceptions(std::ios::eofbit | std::ios::failbit | std::ios::badbit);    // raising exceptions when one of these flags is set
+std::cin.exceptions(std::ios::failbit | std::ios::badbit);  // raising exceptions when one of these flags is set
 while (input.empty())
 {
-	try                                                                     // code section where 
+	try                                         // code section where the exceptions in which exceptions will be catched
 	{
-		std::cout << "Enter a command: "
-		getline(std::cin, input);                                           // operation on std::cin, sets flag under circumstances
+        std::cout << "Enter a command: "
+		getline(std::cin, input);               // operation on std::cin, sets flag under circumstances
 		std::cout << std::endl;
 	}
 	catch (const std::ios::failure &error)
 	{
-		if (std::cin.bad())                                                 // distinguishing which flag is set to adopt a given behavior
+		if (std::cin.bad())                     // distinguishing which flag is set to adopt a given behavior
 		{
-            std::cout << error.what() << std::endl;
-			throw;                                                          // throw back the error to the next try/catch (if none is found, to main function)
-		}
-		else if (std::cin.eof())
-		{
-			std::cout << "Leaving." << std::endl;
-			throw;
+            std::cout << error.what() << std::endl;     // what() refers to the catched error description (in this case, std::ios::failure)
+			throw;                                      // throw back the error to the next try/catch (if none is found, to main function)
 		}
 		else if (std::cin.fail())
 		{
             std::cout << error.what() << std::endl;
-			std::cin.clear();                                               // have to clear flags to be able to re-loop again
-			input.clear();                                                  // reset the std::string (!= std::stream.clear())
+			std::cin.clear();                           // have to clear flags to be able to re-loop again
+			input.clear();                              // reset the std::string (!= std::stream.clear())
 			continue;
-		}
+        }
     }
 }
 ```
