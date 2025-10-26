@@ -124,6 +124,8 @@ class Rectangle
 
 To create an **instance** of a given `class`, you will have to define a **[public](#access-specifiers)** ***constructor*** and a ***destructor*** in order to respectively *construct* and *destruct* a class **instance** outside its own scope.
 
+> ⚠️ Each constructor/destructor **has to be defined**.
+
 ### Constructor
 
 A **constructor** is a special [member function](#members-attributes--methods) executed when an object is declared, initializing the object’s **state**, [members and base class](#inheritence) : calling their respective constructors.
@@ -133,11 +135,12 @@ A **constructor** is a special [member function](#members-attributes--methods) e
 - A constructor without any parameter become the **default constructor**. It will be automatically called at the instance declaration.
 
 - If **no constructors are declared**, the compiler automatically generates a default constructor which is qualified as ***trivial*** : it **only** performs member and base class ***default initializations***.
-    > **Default initialization** depends on member's **datatype**
+    > **Default initialization** depends on member's **datatype**:
     >- **Built-in types**: Remain **uninitialized**, contain indeterminate values (same logic as C).
     >- **Class-type** members: Each member's default constructor is called.
 
 - If any constructor is declared, but **none is a default constructor**, the compiler **does not** generate one.
+
 
 ```cpp
 className(/* optionnal parameters */);
